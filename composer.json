@@ -1,0 +1,19 @@
+{
+    "name": "ntimbablog/portfolio",
+    "description": "Personal website showcasing my online portfolio, which includes my latest projects and professional skills.",
+    "type": "project",
+    "license": "Licence MIT",
+    "autoload": {
+        "psr-4": {
+            "Ntimbablog\\Portfolio\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ntimba",
+            "email": "hello@ntimba.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

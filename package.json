@@ -1,0 +1,11 @@
+{
+  "name": "blogphp",
+  "version": "1.0.0",
+  "description": "Personal website showcasing my online portfolio, which includes my latest projects and professional skills.",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./assets/sass/main.scss:./assets/css/style.css"
+  },
+  "author": "Ntimba",
+  "license": "MIT"
+}
