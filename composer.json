@@ -2,7 +2,7 @@
     "name": "ntimbablog/portfolio",
     "description": "Personal website showcasing my online portfolio, which includes my latest projects and professional skills.",
     "type": "project",
-    "license": "Licence MIT",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Ntimbablog\\Portfolio\\": "src/"

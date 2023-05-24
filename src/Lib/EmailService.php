@@ -1,12 +1,15 @@
 <?php
 // Src/Lib/EmailService.php
 
+declare(strict_types=1);
+
 namespace App\Lib;
 
 
 class EmailService {
 
-    public function sendEmail($to, $subject, $message, $headers) {
+    public function sendEmail(string $to, string $subject, string $message, string $headers) : bool
+    {
         if(mail($to, $subject, $message, $headers)) {
             return true;
         } else {
@@ -14,7 +17,8 @@ class EmailService {
         }
     }
 
-    public function prepareConfirmationEmail($username, $email, $confirmationLink) {
+    public function prepareConfirmationEmail(string $username, string $email, string $confirmationLink) : bool
+    {
         $subject = "Confirmation d'inscription au blog de ntimba.com.";
         $message = $this->getConfirmationEmailBody($username, $confirmationLink);
         $headers = 'From: webmaster@' . $_SERVER['HTTP_HOST'] . "\r\n" .
@@ -24,7 +28,8 @@ class EmailService {
         return $this->sendEmail($email, $subject, $message, $headers);
     }
 
-    private function getConfirmationEmailBody($username, $confirmationLink) {
+    private function getConfirmationEmailBody(string $username, string $confirmationLink) : string
+    {
         // Start output buffering
         ob_start();
 
