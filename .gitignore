@@ -44,7 +44,7 @@ tests/
 __tests__/
 
 # Dependency files
-#*.lock
+#*.lock 
 package-lock.json
 yarn.lock
 
