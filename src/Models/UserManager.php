@@ -42,11 +42,22 @@ class UserManager
         if ( $result === false ) {
             return false;
         }
-        
-        $user = new User();
-        $user->hydrate( $result );
-        return $user;
 
+        $user = new User();
+        $user->setId($result['user_id']);
+        $user->setFirstname($result['user_firstname']);
+        $user->setLastname($result['user_lastname']);
+        $user->setEmail($result['user_email']);
+        $user->setPassword($result['user_password']);
+        $user->setRegistrationDate($result['user_registration_date']);
+        $user->setRole($result['user_role']);
+        $user->setToken($result['user_token']);
+        $user->setProfilePicture($result['user_profile_picture']);
+        $user->setBiography($result['user_biography']);
+        $user->setStatut($result['user_statut']);
+        $user->setAuditedAccount($result['user_audited_account']);
+        
+        return $user;
     }
 
     public function getAllUsers(): void

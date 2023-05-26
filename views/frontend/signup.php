@@ -8,13 +8,11 @@
 </head>
 <body>
     <div class="errors">
-
-    <?php 
-        foreach( $this->getErrors() as $error ) {
-            echo $error . '<br>';
-        }
-    ?>
-
+        <?php 
+            foreach( $this->getErrors() as $error ) {
+                echo $error . '<br>';
+            }
+        ?>
     </div>
 
     <form action="?action=signup" method="post">

@@ -19,6 +19,7 @@ class UserController
     protected const WRONG_PASSWORD_FORMAT = "Votre mot de passe doit comporter au minimum 8charactères 1majuscule, 1 minuscule et un caractère spécial";
     protected const WRONG_EMAIL_FORMAT = "Mauvais format d'email";
     protected const USER_EXIST = "Cet utilisateur existe déjà";
+    protected const INVALID_CONNECTION_DATA = "Données de connexion invalide";
     
 
     public function getErrors(): array
@@ -113,16 +114,6 @@ class UserController
         // supprime untilisateur 
     }
 
-    public function login(): void
-    {
-        // connecte l'utilisateur
-    }
-
-    public function logout(): void
-    {
-        // pour deconnecter l'utilisateur
-    }
-
     public function checkPermission(): void
     {
         // vérifier les permission des utilisateurs 
@@ -159,7 +150,67 @@ class UserController
     public function loginUser(array $userData) : void
     {
         // Login user
-        debug( $userData );
+        if( !empty( $userData['email'] ) && !empty( $userData['password'] ) )
+        {
+            $email = $userData['email'];
+            $password = $userData['password'];
+
+            debug($userData);
+            // recupérer l'utilisateur 
+            $userManager = new UserManager();
+            $getUserId = $userManager->getUserId( $email );
+
+            if( $getUserId ){
+                // recupérer les coordonées de l'utilisateur dont le son mot de passe
+                $databaseData = $userManager->getUser( $getUserId );
+
+                if( $databaseData->getRole() === 'admin' ){
+                    $this->loginAdmin( $databaseData, $password );
+                }else{
+                    $this->loginUserNormal( $databaseData, $password );
+                }
+            
+            }else{
+                $this->errors[] = self::INVALID_CONNECTION_DATA;
+            }
+        }
+
+        require('./views/frontend/login.php');
     }
+
+    public function loginAdmin(User $user, string $password) : void
+    {
+        if( password_verify($password, $user->getPassword()) )
+        {
+            echo "vous ête connecé en tant qu'admin";
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['user_id'] = $user->getId();
+            $_SESSION['user_role'] = $user->getRole();
+
+        }else{
+            $this->errors[] = self::INVALID_CONNECTION_DATA;
+        }
+    }
+
+    public function loginUserNormal(User $user, string $password) : void
+    {
+        if( password_verify($password, $user->getPassword()) )
+        {
+            echo "Utilisateur connecté";
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['user_id'] = $user->getId();
+            $_SESSION['user_role'] = $user->getRole();
+        }else{
+            $this->errors[] = self::INVALID_CONNECTION_DATA;
+        }
+    }
+
+    public function userConnected() : void
+    {
+        if( !isset( $_SESSION['user_id'] ) ) {
+            header('Location: login.php');
+            exit();
+        }
+    }    
 }
 

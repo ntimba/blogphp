@@ -7,7 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="?action=signup" method="post">
+    <div class="errors">
+        <?php 
+            foreach( $this->getErrors() as $error ) {
+                echo $error . '<br>';
+            }
+        ?>
+    </div>
+
+    <form action="" method="post">
         <input type="email" name="email" placeholder="Email"> <br>
         <input type="password" name="password" placeholder="Mot de passe"> <br>
         <button type="submit">S'enregistrer</button> <br>

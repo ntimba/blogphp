@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -9,7 +10,11 @@ use Ntimbablog\Portfolio\Controllers\AdminController;
 
 $userController = new UserController();
 
-
+function debug($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
 
 // Models
 
@@ -56,7 +61,11 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
 
             break;
         case 'login' : 
-            $pageController->handleLogin();
+            $data = [];
+            if( isset( $_POST ) && !empty( $_POST ) ) {
+                $data = $_POST;
+            }
+            $userController->loginUser($data);
             break;
     }
 }else{
@@ -73,7 +82,7 @@ $adminController = new AdminController();
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
         case 'admin' :
-            $adminController->handleAdmin();
+            $adminController->dashboard();
             break;
         case 'blog' : 
             $adminController->handleBlog();
@@ -100,11 +109,11 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $adminController->handleUser();
             break;
         case 'logout' : 
-            $adminController->handleLogout();
+            $adminController->logout();
             break;
     }
 }else{
     // Sera visible uniquement pour les personnes connecté
-    $adminController->handleAdmin();
+    $adminController->dashboard();
 }
 
