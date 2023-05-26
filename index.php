@@ -10,11 +10,7 @@ use Ntimbablog\Portfolio\Controllers\AdminController;
 
 $userController = new UserController();
 
-function debug($var){
-    echo '<pre>';
-    var_dump($var);
-    echo '</pre>';
-}
+
 
 // Models
 

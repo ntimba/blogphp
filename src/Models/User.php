@@ -162,18 +162,19 @@ class User
         }
     }
 
-    public function setStatut(mixed $statut): void
+    public function setStatut($statut): void
     {
         if (is_bool($statut) || is_int($statut)) {
             if ($statut <= 1) {
                 $this->statut = $statut;
             } else {
-                throw new InvalidArgumentException(self::DO_NOT_EXCEED_1);
+                throw new OutOfBoundsException(self::DO_NOT_EXCEED_1);
             }
         } else {
-            throw new InvalidArgumentException(self::BOOLEAN_OR_INTEGER);
+            throw new TypeError(self::BOOLEAN_OR_INTEGER);
         }
     }
+    
     
     public function setAuditedAccount(mixed $audited): void
     {
