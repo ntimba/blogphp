@@ -5,42 +5,47 @@ declare(strict_types=1);
 // Utiliser les namespaces
 namespace Ntimbablog\Portfolio\Controllers;
 
-use Ntimbablog\Portfolio\User;
-use Ntimbablog\Portfolio\UserManager;
-
-
 class AdminController
 {
-    public function handleAdmin() {
+    public function handleAdmin(): void
+    {
         require('./views/backend/admin.php');
     }
 
-    public function handleBlog() {
+    public function handleBlog(): void
+    {
         require('./views/backend/blog.php');
     }
 
-    public function handlePost() {
+    public function handlePost(): void
+    {
         require('./views/backend/post.php');
     }
 
-    public function handlePages() {
+    public function handlePages(): void
+    {
         require('./views/backend/pages.php');
     }
 
-    public function handlePage() {
+    public function handlePage(): void
+    {
         require('./views/backend/page.php');
     }
 
-    public function handleUsers() {
+    public function handleUsers(): void
+    {
         require('./views/backend/users.php');
     }
 
-    public function handleUser() {
+    public function handleUser(): void
+    {
         require('./views/backend/user.php');
     }
 
-    public function handleLogout() {
+    public function handleLogout(): void
+    {
         require('./views/backend/logout.php');
     }
     
 }
+

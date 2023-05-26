@@ -1,80 +1,25 @@
 <?php
-// session_start();
-
-// Database connecion
-use Ntimbablog\Portfolio\Lib\Database;
-
-// User controller
-use Ntimbablog\Portfolio\Controllers\UserController;
-use Ntimbablog\Portfolio\Controllers\PageController;
-use Ntimbablog\Portfolio\Controllers\AdminController;
 
 require __DIR__ . '/vendor/autoload.php';
 
+
+// User controller
+use Ntimbablog\Portfolio\Controllers\UserController;
+use Ntimbablog\Portfolio\Controllers\AdminController;
+
+$userController = new UserController();
+
+
+
+// Models
+
+
 // la fonction de debugage
-function debug($var){
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-}
-
-
-// $userController = new userController();
-
-
-
-// les routes
-
-
-
-
-
-// Les besoins que j'ai 
-
-// 1. Avoir une liste des routes
-
-// 2. chaque route fait appelle à un controller
-
-// 3. recupéréer le url
-
-// 4. Le lien correspond à quelle route ?
-
-
-// class Router
-// {
-
-//     private array $routes = [];
-
-//     // ajouter une route
-//     public function addRoute(string $route, string $controller, string $method) {
-
-//         $this->routes[$route] = ['controller' => $controller, 'method' => $method];
-        
-//     }
-
-//     public function dispatch(string $route) {
-//         // $routes = $this->routes;
-
-//         if( array_key_exists( $route, $this->routes) ) {
-            
-//             $controllerName = $this->routes[$route]['controller'];
-//             $methodName = $this->routes[$route]['method'];
-//             $controller = new $controllerName;
-//             $controller->$methodName();
-//         }
-        
-//     }
-// }
-
-
 
 /**
  *  Front 
  * 
 */
-
-$pageController = new PageController();
-$userController = new UserController();
 
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
@@ -103,10 +48,12 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $pageController->handleContact();
             break;
         case 'signup' : 
+            $data = [];
             if( isset( $_POST ) && !empty( $_POST ) ) {
                 $data = $_POST;
             }
-            $pageController->handleSignup($data);
+            $userController->createUser($data);
+
             break;
         case 'login' : 
             $pageController->handleLogin();
