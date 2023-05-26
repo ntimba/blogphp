@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 namespace Ntimbablog\Portfolio\Models;
+use \OutOfBoundsException;
+use \InvalidArgumentException;
 
 class User
 {
@@ -16,8 +18,8 @@ class User
     private ?string $token;
     private ?string $profilePicture;
     private ?string $biography;
-    private bool $statut;
-    private bool $auditedAccount;
+    private mixed $statut;
+    private mixed $auditedAccount;
     private array $errors = [];
 
     protected const INVALID_ID = "Le format de l'identifiant est invalid";
@@ -32,8 +34,11 @@ class User
     protected const INVALID_BIOGRAPHY = "Le format de biography est invalid";
     protected const INVALID_STATUT = "Le format de statut est invalid";
     protected const INVALID_AUDITED_ACCOUNT = "Le format de audited_account est invalid";
+    protected const DO_NOT_EXCEED_1 = "Le paramètre ne doit pas dépasser 1.";
+    protected const BOOLEAN_OR_INTEGER = "Le paramètre doit être un booléen ou un entier.";
+    
 
-        
+
     public function __construct( array $userdata = [])
     {
         $this->hydrate($userdata);
@@ -158,13 +163,22 @@ class User
             $this->errors[] = self::INVALID_BIOGRAPHY;
         }
     }
-    
-    public function setStatut(bool $statut): void
+
+    public function setStatut(mixed $statut): void
     {
-        $this->statut = $statut;
+        if (is_bool($statut) || is_int($statut)) {
+            if ($statut <= 1) {
+                $this->statut = $statut;
+            } else {
+                throw new OutOfBoundsException(self::DO_NOT_EXCEED_1);
+            }
+        } else {
+            throw new InvalidArgumentException(self::BOOLEAN_OR_INTEGER);
+        }
     }
     
-    public function setAuditedAccount(bool $audited): void
+    
+    public function setAuditedAccount(mixed $audited): void
     {
         if (is_bool($audited)) {
             $this->auditedAccount = $audited;
@@ -174,7 +188,6 @@ class User
             $this->errors[] = self::INVALID_AUDITED_ACCOUNT;
         }
     }
-    
     
 
     /*****************************
