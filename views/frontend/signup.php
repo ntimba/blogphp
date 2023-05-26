@@ -7,13 +7,23 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="errors">
+
+    <?php 
+        foreach( $this->getErrors() as $error ) {
+            echo $error . '<br>';
+        }
+    ?>
+
+    </div>
+
     <form action="?action=signup" method="post">
         <input type="text" name="firstname" placeholder="Prénom"> <br>
         <input type="text" name="lastname" placeholder="Nom de famille"> <br>
         <input type="email" name="email" placeholder="Email"> <br>
         <input type="password" name="password" placeholder="Mot de passe"> <br>
         <input type="password" name="repeat_password" placeholder="Répéter le mot de passe"> <br>
-        <button type="submit">S'enregistrer</button> <br>
+        <button type="submit" name="submit">S'enregistrer</button> <br>
     </form>
 </body>
 </html>

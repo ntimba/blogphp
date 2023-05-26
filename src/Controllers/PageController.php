@@ -5,15 +5,6 @@ declare(strict_types=1);
 // Utiliser les namespaces
 namespace Ntimbablog\Portfolio\Controllers;
 
-use Ntimbablog\Portfolio\User;
-use Ntimbablog\Portfolio\UserManager;
-
-// Controller
-use Ntimbablog\Portfolio\Controller\UserController;
-
-$userController = new UserController();
-
-
 class PageController
 {
     public function handleAbout() {
@@ -40,7 +31,11 @@ class PageController
         require('./views/frontend/contact.php');
     }
 
-    public function handleSignup() {
+    public function handleSignup($userData) {
+
+        $userController = new UserController();
+        $userController->signupUser($userData);
+
         require('./views/frontend/signup.php');
     }
 
@@ -49,3 +44,4 @@ class PageController
     }
     
 }
+

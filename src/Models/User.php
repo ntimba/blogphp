@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Ntimbablog\Portfolio\Models;
 
 class User
 {
@@ -15,23 +15,25 @@ class User
     private string $role;
     private ?string $token;
     private ?string $profilePicture;
-    private string $biography;
+    private ?string $biography;
     private bool $statut;
     private bool $auditedAccount;
     private array $errors = [];
-    
-    // errors
-    const INVALID_FIRSTNAME = 'invalide firstname';
-    const INVALID_LASTNAME = 2;
-    const INVALID_EMAIL = 3;
-    const INVALID_PASSWORD = 4;
-    const INVALID_REGISTRATION_DATE = 5;
-    const INVALID_ROLE = 6;
-    const INVALID_PROFILE_PICTURE = 7;
-    const INVALID_BIOGRAPHY = 8;
-    const INVALID_USER_STATUT = 9;    
-    
-    
+
+    protected const INVALID_ID = "Le format de l'identifiant est invalid";
+    protected const INVALID_FIRSTNAME = "Le format de firstname est invalid";
+    protected const INVALID_LASTNAME = "Le format de lastname est invalid";
+    protected const INVALID_EMAIL = "Le format d'email est invalid";
+    protected const INVALID_PASSWORD = "Le format de password est invalid";
+    protected const INVALID_REGISTRATION_DATE = "Le format de registration_date est invalid";
+    protected const INVALID_ROLE = "Le format de role est invalid";
+    protected const INVALID_TOKEN = "Le format de token est invalid";
+    protected const INVALID_PROFILE_PICTURE = "Le format de profile_picture est invalid";
+    protected const INVALID_BIOGRAPHY = "Le format de biography est invalid";
+    protected const INVALID_STATUT = "Le format de statut est invalid";
+    protected const INVALID_AUDITED_ACCOUNT = "Le format de audited_account est invalid";
+
+        
     public function __construct( array $userdata = [])
     {
         // var_dump($userdata);
@@ -57,6 +59,8 @@ class User
         if(is_numeric($id) && !empty($id))
         {
             $this->id = $id;
+        }else {
+            $this->errors[] = self::INVALID_ID;
         }
     }
 
@@ -92,12 +96,8 @@ class User
         } 
     }
 
-
-
-
     public function setPassword(string $pass) : void
     {
-        
         if( is_string( $pass ) && !empty($pass) )
         {
             // hasher le mot de passe
@@ -109,8 +109,7 @@ class User
         }
     }
 
-
-    public function setRegistrationdate(string $registrationDate) : void
+    public function setRegistrationDate(string $registrationDate) : void
     {
         if( is_string( $registrationDate ) && !empty($registrationDate) )
         {
@@ -119,7 +118,6 @@ class User
             $this->errors[] = self::INVALID_REGISTRATION_DATE;
         } 
     }
-   
 
     public function setRole(string $role) : void
     {
@@ -131,68 +129,53 @@ class User
         } 
     }
 
-
     public function setToken(?string $token): void
     {
+        if ($token === '') {
+            throw new \Exception(self::INVALID_TOKEN);
+        }
         $this->token = $token;
-    }
+    }    
 
-    public function setProfilePicture(?string $profilePicture) : void
+    public function setProfilePicture(?string $profilePicture): void
     {
-        if($profilePicture === null) {
-            $this->getProfilePicture = $profilePicture;
+        if ($profilePicture === null) {
+            $this->profilePicture = $profilePicture;
             return;
         }
-
-        if( is_string( $profilePicture ) && !empty($profilePicture) )
-        {
+    
+        if (is_string($profilePicture) && !empty($profilePicture)) {
             $this->profilePicture = $profilePicture;
         } else {
             $this->errors[] = self::INVALID_PROFILE_PICTURE;
-        } 
-    }
-
-    // public function setToken(?string $token): void
-    // {
-    //     $this->token = $token;
-    // }
-
-
-
-    public function setBiography(string $biography) : void
-    {
-        if( is_string( $biography ) && !empty($biography) )
-        {
-            $this->biography = $biography;
-        } else {
-            $this->errors[] = self::INVALID_BIOGRAPHY;
-        } 
-    }
-    
-
-    public function setStatut($statut) : void
-    {
-        if( is_bool( $statut ) )
-        {
-            $this->statut = $statut;
-        } elseif (is_int( $statut )) 
-        {
-            $this->statut = ($statut === 1);
-        } 
-        else {
-            $this->errors[] = self::INVALID_USER_STATUT;
-        } 
-    }
-
-
-    public function setAuditedaccount($audited): void
-    {
-        if(is_bool($audited)){
-            $this->auditedAccount = $audited;
-        }elseif( is_int( $audited ) ){
-            $this->auditedAccount = ( $audited === 1 );
         }
     }
+    
+    public function setBiography(?string $biography): void
+    {
+        $this->biography = $biography;
+    
+        if (!is_string($biography) || (is_string($biography) && empty($biography))) {
+            $this->errors[] = self::INVALID_BIOGRAPHY;
+        }
+    }
+    
+    public function setStatut(bool $statut): void
+    {
+        $this->statut = $statut;
+    }
+    
+    public function setAuditedAccount($audited): void
+    {
+        if (is_bool($audited)) {
+            $this->auditedAccount = $audited;
+        } elseif (is_int($audited)) {
+            $this->auditedAccount = ($audited === 1);
+        } else {
+            $this->errors[] = self::INVALID_AUDITED_ACCOUNT;
+        }
+    }
+    
     
 
     /*****************************
@@ -259,7 +242,7 @@ class User
         return $this->auditedAccount;
     }
 
-    public function isEmailValid($email) : bool
+    public function isEmailValid(string $email) : bool
     {
         if( filter_var($email, FILTER_VALIDATE_EMAIL) ) {
             return true;
@@ -267,10 +250,9 @@ class User
             return false;
         }
     }
-
     
     // vérifier l'utilisateur
-    public function verifyUser($email)
+    public function verifyUser(string $email)
     {
         // 1. récupérer le token généré
         // 2. envoyer un mail pour que l'utilisateur puisse valider son compte
@@ -290,19 +272,14 @@ class User
         // 3. connecter l'utilisateur
     }
 
-    public function logoutUser()
+    public function logoutUser(): void
     {
         // La fonction va deconnecter l'utilisateur
     }
 
-
-
-
-    public function isUserConnected()
+    public function isUserConnected(): void
     {
         // Vérifier si l'utilisateur est connecté
-    }
-
-    
-    
+    }    
 }
+

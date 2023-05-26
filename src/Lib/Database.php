@@ -3,7 +3,8 @@
 
 declare(strict_types=1);
 
-namespace App\Lib;
+namespace Ntimbablog\Portfolio\Lib;
+
 use \PDO;
 
 class Database
