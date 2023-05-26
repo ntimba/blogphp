@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 namespace Ntimbablog\Portfolio\Models;
+use \OutOfBoundsException;
+use \InvalidArgumentException;
 
 class User
 {
@@ -162,7 +164,7 @@ class User
         }
     }
 
-    public function setStatut($statut): void
+    public function setStatut(mixed $statut): void
     {
         if (is_bool($statut) || is_int($statut)) {
             if ($statut <= 1) {
@@ -171,7 +173,7 @@ class User
                 throw new OutOfBoundsException(self::DO_NOT_EXCEED_1);
             }
         } else {
-            throw new TypeError(self::BOOLEAN_OR_INTEGER);
+            throw new InvalidArgumentException(self::BOOLEAN_OR_INTEGER);
         }
     }
     
