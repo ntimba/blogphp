@@ -31,7 +31,6 @@ class UserManager
 
     public function getUser( int $id ): mixed
     {
-        // echo $id;
         $query = 'SELECT user_id, user_firstname, user_lastname, user_email, user_password, user_registration_date, user_role, user_token, user_profile_picture, user_biography, user_statut, user_audited_account FROM user WHERE user_id = :user_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([

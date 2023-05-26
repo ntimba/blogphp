@@ -26,7 +26,7 @@ class UserController
         return $this->errors;
     }
 
-    public function createUser( array $userData)
+    public function createUser( array $userData): void
     {
         // Si les variables sont rempli
         if( 

@@ -36,7 +36,6 @@ class User
         
     public function __construct( array $userdata = [])
     {
-        // var_dump($userdata);
         $this->hydrate($userdata);
     }
 
@@ -165,7 +164,7 @@ class User
         $this->statut = $statut;
     }
     
-    public function setAuditedAccount($audited): void
+    public function setAuditedAccount(bool $audited): void
     {
         if (is_bool($audited)) {
             $this->auditedAccount = $audited;
@@ -252,7 +251,7 @@ class User
     }
     
     // vérifier l'utilisateur
-    public function verifyUser(string $email)
+    public function verifyUser(string $email): void
     {
         // 1. récupérer le token généré
         // 2. envoyer un mail pour que l'utilisateur puisse valider son compte
