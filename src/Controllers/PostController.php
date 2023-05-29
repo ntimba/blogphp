@@ -14,7 +14,6 @@ use Ntimbablog\Portfolio\Controllers\CategoryController;
 
 class PostController
 {
-
     private array $errors = [];
 
     protected const EMPTY_VALUES = "Remplissez tous les champs";
@@ -75,6 +74,15 @@ class PostController
         $categories = $categoryManager->getCategories();
         
         require('./views/backend/addpost.php');
-    }    
+    }   
+    
+    public function listBlogPosts() : void
+    {
+        // recupréer les posts
+        $postManager = new PostManager();
+        $posts = $postManager->getAllPosts();
+
+        require('./views/frontend/blog.php');
+    }
 }
 

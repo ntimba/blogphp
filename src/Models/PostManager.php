@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ntimbablog\Portfolio\Models;
 
 use mysqli_sql_exception;
+use Ntimbablog\Portfolio\Models\Post;
+
 use Ntimbablog\Portfolio\lib\Database;
 use \PDO;
 
@@ -48,7 +52,7 @@ class PostManager
         return $post;
     }
 
-    public function getAllPosts() : mixed
+    public function getAllPosts() : array
     {
         $query = 'SELECT post_id, post_title, post_content, post_creation_date, post_update_date, post_slug, post_category_id, post_user_id, post_featured_image_path FROM post';
         $statement = $this->db->getConnection()->prepare($query);
@@ -61,11 +65,21 @@ class PostManager
         }
 
         $posts = [];
-
         foreach( $postsData as $postData ){
-            $post = new Post($postData);
+            $post = new Post();
+
+            $post->setId( $postData['post_id'] );
+            $post->setTitle( $postData['post_title'] );
+            $post->setContent( $postData['post_content'] );
+            $post->setCreationDate( $postData['post_creation_date'] );
+            $post->setUpdateDate( $postData['post_update_date'] );
+            $post->setSlug( $postData['post_slug'] );
+            $post->setCategoryId( $postData['post_category_id'] );
+            $post->setUserId( $postData['post_user_id'] );
+            $post->setFeaturedImagePath( $postData['post_featured_image_path'] );
             $posts[] = $post;
         }
+
         return $posts;   
     }
     
