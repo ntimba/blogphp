@@ -7,10 +7,17 @@ require __DIR__ . '/vendor/autoload.php';
 // User controller
 use Ntimbablog\Portfolio\Controllers\UserController;
 use Ntimbablog\Portfolio\Controllers\AdminController;
+use Ntimbablog\Portfolio\Controllers\PostController;
+use Ntimbablog\Portfolio\Controllers\CategoryController;
 
 $userController = new UserController();
 
 
+function debug($var){
+    echo "<pre>";
+    var_dump($var);
+    echo "</pre>";
+}
 
 // Models
 
@@ -74,6 +81,8 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
  * 
 */
 $adminController = new AdminController();
+$postController = new PostController();
+$categoryController = new CategoryController();
 
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
@@ -83,14 +92,20 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'blog' : 
             $adminController->handleBlog();
             break;
-        case 'post' : 
-            $identifier = 0;
-            if( isset($_GET['id']) && $_GET['id'] > 0) {
-                $identifier = (int) $_GET['id'];
-                $adminController->handlePost($identifier);
-            }else{
-                $adminController->handleBlog();
+        case 'addpost' : 
+            $data = [];
+            if( isset( $_POST ) && !empty( $_POST ) || isset( $_FILES['featured_image'] ) ) {
+                $data = $_POST;
+                $data['featured_image'] = $_FILES['featured_image'];  
             }
+            $postController->addPost($data);
+            break;
+        case 'addcategory' : 
+            $data = [];
+            if( isset( $_POST ) && !empty( $_POST ) ) {
+                $data = $_POST;
+            }
+            $categoryController->insertCategory($data);
             break;
         case 'pages' : 
             $adminController->handlePages();

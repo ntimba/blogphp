@@ -9,7 +9,7 @@ RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.co
 RUN apt-get update && apt-get upgrade -y \
     && docker-php-ext-install pdo pdo_mysql && docker-php-ext-enable pdo pdo_mysql \
     && apt install -y ca-certificates curl git
-
+    
 # Installation de Go et mhsendmail pour l'envoi de courriels
 RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - \
     && PATH="/usr/local/go/bin:$PATH" \
