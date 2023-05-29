@@ -73,7 +73,7 @@ class Category
         }
     }
 
-    public function setIdParent( int $idParent) : void
+    public function setIdParent(mixed $idParent) : void
     {
         if(is_numeric($idParent) || $idParent === NULL)
         {
