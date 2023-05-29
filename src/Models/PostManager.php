@@ -143,11 +143,12 @@ class PostManager
                     if( move_uploaded_file($file['tmp_name'], $filePath) )
                     {
                         return $filePath;
+                    }else {
+                        return NULL;
                     }
                 }
             }
         }
-        return NULL;
     }  
 }
 
