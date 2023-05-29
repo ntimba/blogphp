@@ -18,7 +18,6 @@ class Post
         
     public function __construct( array $userdata = [])
     {
-        // var_dump($userdata);
         $this->hydrate($userdata);
     }
 
@@ -162,3 +161,4 @@ class Post
         
     }    
 }
+

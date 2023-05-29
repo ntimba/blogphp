@@ -29,7 +29,7 @@ class Category
     }
 
     // SETTERS
-    public function setId(int $id)
+    public function setId(int $id) : void
     {
         if(is_numeric($id) && !empty($id))
         {
@@ -37,7 +37,7 @@ class Category
         }
     }
 
-    public function setName(string $name)
+    public function setName(string $name) : void
     {
         if(is_string($name) && !empty( $name ))
         {
@@ -47,7 +47,7 @@ class Category
         }
     }
 
-    public function setSlug(string $slug)
+    public function setSlug(string $slug) : void
     {
         // Créer une fonction qui va supprimer les espaces
         if( is_string($slug) && !empty( $slug ) )
@@ -57,7 +57,7 @@ class Category
         }
     }
 
-    public function setDescription(?string $description)
+    public function setDescription(?string $description) : void
     {
         if( is_string($description) && !empty( $description ))
         {
@@ -65,7 +65,7 @@ class Category
         }
     }
 
-    public function setCreationDate(string $creationDate)
+    public function setCreationDate(string $creationDate) : void
     {
         if(is_string($creationDate) && !empty($creationDate))
         {
@@ -73,7 +73,7 @@ class Category
         }
     }
 
-    public function setIdParent( $idParent)
+    public function setIdParent( int $idParent) : void
     {
         if(is_numeric($idParent) || $idParent === NULL)
         {
@@ -113,3 +113,4 @@ class Category
         return $this->idParent;
     }
 }
+

@@ -87,7 +87,7 @@ class PostManager
         ]);
     }
 
-    public function updatePost(Post $post)
+    public function updatePost(Post $post) : void
     {
         $query = 'UPDATE  SET post_title = :post_title, post_content = :post_content, post_creation_date = :post_creation_date, post_update_date = :post_update_date, post_slug = :post_slug, post_category_id = :post_category_id, post_user_id = :post_user_id, post_featured_image = :post_featured_image WHERE post_id = :post_id';
         $statement = $this->db->getConnection()->prepare($query);
@@ -104,7 +104,7 @@ class PostManager
         ]);
     }
 
-    public function deletePost( int $postId )
+    public function deletePost( int $postId ) : void
     {
         $query = 'DELETE FROM post WHERE post_id = :post_id';
         $statement = $this->db->getConnection()->prepare($query);
@@ -113,7 +113,7 @@ class PostManager
         ]);
     }
 
-    public function importImage(array $file, string $destination)
+    public function importImage(array $file, string $destination) : string
     {
         if( isset($file['name']) && $file['error'] == 0 ) {
             if( $file['size'] <= 2000000 )
@@ -126,9 +126,6 @@ class PostManager
                 {
                     $newFileName = str_replace(' ', '_', basename($file['name']) );
                     $filePath = $destination . $newFileName;
-                    // move_uploaded_file($file['tmp_name'], $destination . basename($file['name']));
-                    // move_uploaded_file($file['tmp_name'], $destination . $newFileName );
-
                     if( move_uploaded_file($file['tmp_name'], $filePath) )
                     {
                         return $filePath;
@@ -139,3 +136,5 @@ class PostManager
         return NULL;
     }  
 }
+
+

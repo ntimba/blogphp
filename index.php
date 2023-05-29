@@ -13,12 +13,6 @@ use Ntimbablog\Portfolio\Controllers\CategoryController;
 $userController = new UserController();
 
 
-function debug($var){
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-}
-
 // Models
 
 

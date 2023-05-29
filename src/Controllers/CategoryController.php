@@ -59,17 +59,13 @@ class CategoryController
                 $this->errors[] = self::CATEGORY_EXISTS;
             }
 
-           
         }else{
             if( isset( $categoryData['submit'] ) ) {
                 $this->errors[] = self::EMPTY_VALUES;
             }
         }
-        
-        
+                
         $categories = $categoryManager->getCategories();
-
-        // debug($categories);
 
         require( './views/backend/insertcategory.php' );
 
@@ -96,3 +92,4 @@ class CategoryController
 
     }
 }
+

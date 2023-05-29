@@ -77,3 +77,4 @@ class PostController
         require('./views/backend/addpost.php');
     }    
 }
+

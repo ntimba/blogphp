@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Models;
-use App\Lib\Database;
+namespace Ntimbablog\Portfolio\Models;
+use Ntimbablog\Portfolio\Lib\Database;
 use PDO;
 
 use \App\Models;
@@ -30,7 +30,7 @@ class CommentManager
 
     public function getComment( int $id ): mixed
     {
-        // echo $id;
+
         $query = 'SELECT id, content, commentedDate, idArticle, userId, validateComment WHERE id = :id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
@@ -53,7 +53,7 @@ class CommentManager
 
     public function getComments( int $idArticle ): mixed
     {
-        // echo $id;
+
         $query = 'SELECT id, content, commentedDate, userId, validateComment FROM comment WHERE idArticle = :idArticle';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
@@ -73,9 +73,8 @@ class CommentManager
     }
     
 
-    public function addComment($newComment) : void
+    public function addComment(Comment $newComment) : void
     {
-        // code
         $query = 'INSERT INTO comment(content, commentedDate, idArticle, userId, validateComment) 
                   VALUES(:content, NOW(), :idArticle, :userId, :validateComment)';
         $statement = $this->db->getConnection()->prepare($query);
@@ -87,7 +86,7 @@ class CommentManager
         ]);
     }
 
-    public function deleteComment( int $id )
+    public function deleteComment( int $id ) : void
     {
         $query = 'DELETE FROM comment WHERE id = :id';
         $statement = $this->db->getConnection()->prepare($query);
