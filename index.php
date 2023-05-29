@@ -11,6 +11,10 @@ use Ntimbablog\Portfolio\Controllers\PostController;
 use Ntimbablog\Portfolio\Controllers\CategoryController;
 
 $userController = new UserController();
+$adminController = new AdminController();
+
+$postController = new PostController();
+$categoryController = new CategoryController();
 
 
 // Models
@@ -34,8 +38,8 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'portfolio' : 
             $pageController->handlePortfolio();
             break;
-        case 'posts' : 
-            $pageController->handlePosts();
+        case 'blog' : 
+            $postController->listBlogPosts();
             break;
         case 'post' : 
             $identifier = 0;
@@ -74,16 +78,12 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
  *  Backend 
  * 
 */
-$adminController = new AdminController();
-$postController = new PostController();
-$categoryController = new CategoryController();
-
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
         case 'admin' :
             $adminController->dashboard();
             break;
-        case 'blog' : 
+        case 'posts' : 
             $adminController->handleBlog();
             break;
         case 'addpost' : 

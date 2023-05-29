@@ -1,7 +1,10 @@
 <?php
 
 namespace Ntimbablog\Portfolio\Models;
+
 use Ntimbablog\Portfolio\Lib\Database;
+use Ntimbablog\Portfolio\Models\Comment;
+
 use PDO;
 
 use \App\Models;
@@ -43,9 +46,9 @@ class CommentManager
             return false;
         }
         
-        $post = new Comment();
-        $user->hydrate( $result );
-        return $user;
+        $comment = new Comment();
+        $comment->hydrate( $result );
+        return $comment;
 
     }
 

@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Ntimbablog\Portfolio\Models;
+
 
 class Comment
 {
