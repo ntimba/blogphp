@@ -52,7 +52,7 @@ class PostManager
         return $post;
     }
 
-    public function getAllPosts() : array
+    public function getAllPosts() : array|bool
     {
         $query = 'SELECT post_id, post_title, post_content, post_creation_date, post_update_date, post_slug, post_category_id, post_user_id, post_featured_image_path FROM post';
         $statement = $this->db->getConnection()->prepare($query);
