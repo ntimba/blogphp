@@ -45,7 +45,7 @@ class CategoryManager
         return $category;
     }
 
-    public function getCategories()
+    public function getCategories() : array|bool
     {
         /**
          * La fonction retourne un tableau des objets
@@ -90,7 +90,7 @@ class CategoryManager
         ]);
     }
 
-    public function updateCategory(Category $category)
+    public function updateCategory(Category $category) : void
     {
         $query = 'UPDATE category SET name = :name, slug = :slug, description = :description, creationDate = :creationDate, idParent = :idParent';
         $statement = $this->db->getConnection()->prepare($query);
@@ -104,7 +104,7 @@ class CategoryManager
         ]);
     }
 
-    public function deleteCategory( int $id )
+    public function deleteCategory( int $id ) : void
     {
         $query = 'DELETE FROM article WHERE id = :id';
         $statement = $this->db->getConnection()->prepare($query);
