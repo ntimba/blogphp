@@ -127,7 +127,7 @@ class PostManager
         ]);
     }
 
-    public function importImage(array $file, string $destination) : string
+    public function importImage(array $file, string $destination) : string|NULL
     {
         if( isset($file['name']) && $file['error'] == 0 ) {
             if( $file['size'] <= 2000000 )
