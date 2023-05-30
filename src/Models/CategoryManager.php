@@ -28,20 +28,26 @@ class CategoryManager
 
     public function getCategory( int $id ): mixed
     {
-        $query = 'SELECT id, name, slug, description, creationDate, idParent FROM category WHERE id = :id';
+        $query = 'SELECT category_id, category_name, category_slug, category_description, category_creation_date, category_id_parent FROM category WHERE category_id = :category_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'id' => $id
+            'category_id' => $id
         ]);
 
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $categoryData = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if ( $result === false ) {
+        if ( $categoryData === false ) {
             return false;
         }
         
         $category = new Category();
-        $category->hydrate( $result );
+        $category->setId($categoryData['category_id']);
+        $category->setName($categoryData['category_name']);
+        $category->setSlug($categoryData['category_slug']);
+        $category->setDescription($categoryData['category_description']);
+        $category->setCreationDate($categoryData['category_creation_date']);
+        $category->setIdParent($categoryData['category_id_parent']);
+
         return $category;
     }
 

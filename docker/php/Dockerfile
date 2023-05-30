@@ -3,13 +3,16 @@ FROM php:8.2-apache
 # Active mod_rewrite
 RUN a2enmod rewrite
 
-RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
-
 # Mise à jour et installation des extensions nécessaires
 RUN apt-get update && apt-get upgrade -y \
     && docker-php-ext-install pdo pdo_mysql && docker-php-ext-enable pdo pdo_mysql \
     && apt install -y ca-certificates curl git
-    
+
+# Installation de l'extension Intl
+RUN apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
 # Installation de Go et mhsendmail pour l'envoi de courriels
 RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - \
     && PATH="/usr/local/go/bin:$PATH" \
