@@ -101,9 +101,6 @@ class PostController
         // user
         $userManager = new UserManager();
 
-
-        
-
         // formater la date
         $date = $post->getCreationDate();
         // Afficher la dernière date de mise à jour
@@ -115,5 +112,28 @@ class PostController
         
         require('./views/frontend/post.php');
     }
+
+    public function displayAdminBlogPosts() : void
+    {
+        
+        // recupérer tout les posts
+        $postManager = new PostManager();
+        $posts = $postManager->getAllPosts();
+
+        // les affichers
+        require('./views/backend/posts.php');
+    }
+
+    public function deletePost(int $identifier) : void
+    {
+        // Supprimer le blog post
+        $postManager = new PostManager();
+        $postManager->deletePost($identifier);
+
+        // Afficher la liste des posts
+        $this->displayAdminBlogPosts();
+
+    }
+
 }
 
