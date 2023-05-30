@@ -41,15 +41,25 @@ class PostManager
             'post_id' => $post_id
         ]);
 
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $postData = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if ( $result === false ) {
+        if ( $postData === false ) {
             return false;
         }
         
         $post = new Post();
-        $post->hydrate( $result );
+        $post->setId( $postData['post_id'] );
+        $post->setTitle( $postData['post_title'] );
+        $post->setContent( $postData['post_content'] );
+        $post->setCreationDate( $postData['post_creation_date'] );
+        $post->setUpdateDate( $postData['post_update_date'] );
+        $post->setSlug( $postData['post_slug'] );
+        $post->setCategoryId( $postData['post_category_id'] );
+        $post->setUserId( $postData['post_user_id'] );
+        $post->setFeaturedImagePath( $postData['post_featured_image_path'] );
+
         return $post;
+        
     }
 
     public function getAllPosts() : array|bool

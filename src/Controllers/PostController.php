@@ -7,10 +7,11 @@ namespace Ntimbablog\Portfolio\Controllers;
 use Ntimbablog\Portfolio\Models\CategoryManager;
 use Ntimbablog\Portfolio\Models\Post;
 use Ntimbablog\Portfolio\Models\PostManager;
+use Ntimbablog\Portfolio\Models\UserManager;
+
 use Ntimbablog\Portfolio\Helpers\StringUtil;
 
 use Ntimbablog\Portfolio\Controllers\CategoryController;
-
 
 class PostController
 {
@@ -83,6 +84,36 @@ class PostController
         $posts = $postManager->getAllPosts();
 
         require('./views/frontend/blog.php');
+    }
+
+    public function displayBlogPost(int $identifier) : void
+    {
+
+        // recupérer un blog post
+        $postManager = new PostManager();
+        $post = $postManager->getPost($identifier);
+
+        $categoryManager = new CategoryManager();
+
+        $stringUtil = new StringUtil();
+        
+        
+        // user
+        $userManager = new UserManager();
+
+
+        
+
+        // formater la date
+        $date = $post->getCreationDate();
+        // Afficher la dernière date de mise à jour
+        // Afficher le nom de la catégorie
+        $category = $categoryManager->getCategory($post->getCategoryId());
+        // Afficher la personne qui a écrit
+        $user = $userManager->getUser($post->getUserId());
+
+        
+        require('./views/frontend/post.php');
     }
 }
 

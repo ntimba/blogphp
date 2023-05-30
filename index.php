@@ -45,9 +45,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $identifier = 0;
             if( isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = (int) $_GET['id'];
-                $pageController->handlePost($identifier);
+                $postController->displayBlogPost($identifier);
             }else{
-                $pageController->handlePosts();
+                $postController->listBlogPosts();
             }
             break;
         case 'contact' : 
