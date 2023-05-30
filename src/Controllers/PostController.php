@@ -86,7 +86,7 @@ class PostController
         require('./views/frontend/blog.php');
     }
 
-    public function displayBlogPost($identifier) : void
+    public function displayBlogPost(int $identifier) : void
     {
 
         // recupérer un blog post
@@ -107,7 +107,6 @@ class PostController
         // formater la date
         $date = $post->getCreationDate();
         // Afficher la dernière date de mise à jour
-        // $date = $post->getUpdateDate();
         // Afficher le nom de la catégorie
         $category = $categoryManager->getCategory($post->getCategoryId());
         // Afficher la personne qui a écrit

@@ -46,12 +46,7 @@ class PostManager
         if ( $postData === false ) {
             return false;
         }
-
         
-        // $post = new Post();
-        // $post->hydrate( $result );
-        // return $post;
-
         $post = new Post();
         $post->setId( $postData['post_id'] );
         $post->setTitle( $postData['post_title'] );

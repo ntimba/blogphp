@@ -17,15 +17,6 @@ $postController = new PostController();
 $categoryController = new CategoryController();
 
 
-function debug($var)
-{
-    echo "<pre>";
-    var_dump($var);
-    echo "<pre>";
-}
-
-
-
 // Models
 
 
