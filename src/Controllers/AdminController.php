@@ -23,7 +23,7 @@ class AdminController
 
     public function handleBlog(): void
     {
-        require('./views/backend/blog.php');
+        require('./views/backend/posts.php');
     }
 
     public function handlePost(): void

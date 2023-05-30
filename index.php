@@ -83,8 +83,8 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'admin' :
             $adminController->dashboard();
             break;
-        case 'posts' : 
-            $adminController->handleBlog();
+        case 'adminblogposts' : 
+            $postController->displayAdminBlogPosts();
             break;
         case 'addpost' : 
             $data = [];
@@ -101,7 +101,14 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             }
             $categoryController->insertCategory($data);
             break;
-        case 'pages' : 
+        case 'delete' : 
+            $identifier = 0;
+            if( isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = (int) $_GET['id'];
+                $postController->deletePost($identifier);
+            }else{
+                $postController->displayAdminBlogPosts();
+            }
             $adminController->handlePages();
             break;
         case 'page' : 
