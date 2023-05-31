@@ -97,13 +97,12 @@ class PostManager
     public function createPost(Post $post) : void
     {
         // code
-        $query = 'INSERT INTO post(post_title, post_content, post_creation_date, post_update_date, post_slug, post_category_id, post_user_id, post_featured_image_path) 
-                  VALUES(:post_title, :post_content, NOW(), :post_update_date, :post_slug, :post_category_id, :post_user_id, :post_featured_image_path)';
+        $query = 'INSERT INTO post(post_title, post_content, post_update_date, post_slug, post_category_id, post_user_id, post_featured_image_path) 
+                  VALUES(:post_title, :post_content, :NOW(), :post_slug, :post_category_id, :post_user_id, :post_featured_image_path)';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
             'post_title' => $post->getTitle(),
             'post_content' => $post->getContent(),
-            'post_update_date' => NULL,
             'post_slug' => $post->getSlug(), 
             'post_category_id' => $post->getCategoryId(),
             'post_user_id' => $post->getUserId(),
@@ -113,18 +112,16 @@ class PostManager
 
     public function updatePost(Post $post) : void
     {
-        $query = 'UPDATE  SET post_title = :post_title, post_content = :post_content, post_creation_date = :post_creation_date, post_update_date = :post_update_date, post_slug = :post_slug, post_category_id = :post_category_id, post_user_id = :post_user_id, post_featured_image = :post_featured_image WHERE post_id = :post_id';
+        $query = 'UPDATE post SET post_title = :post_title, post_content = :post_content, post_update_date = NOW(), post_slug = :post_slug, post_category_id = :post_category_id, post_user_id = :post_user_id, post_featured_image_path = :post_featured_image_path WHERE post_id = :post_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'content' => $post->getContent(),
-            'creationDate' => $post->getCreationDate(),
-            'updateDate' => $post->getUpdateDate(),
-            'slug' => $post->getSlug(), 
-            'categoryId' => $post->getCategoryId(),
-            'userId' => $post->getUserId(),
-            'image' => $post->getFeaturedImagePath()
+            'post_id' => $post->getId(),
+            'post_title' => $post->getTitle(),
+            'post_content' => $post->getContent(),
+            'post_slug' => $post->getSlug(), 
+            'post_category_id' => $post->getCategoryId(),
+            'post_user_id' => $post->getUserId(),
+            'post_featured_image_path' => $post->getFeaturedImagePath()
         ]);
     }
 

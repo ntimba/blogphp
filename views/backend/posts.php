@@ -32,16 +32,12 @@
                 <td><?= $post->getUserId(); ?></td>
                 <td><?= $post->getCategoryId(); ?></td>
                 <td><?= $post->getCreationDate(); ?></td>
-                <td> <a href="?action=update&id=<?= $post->getId(); ?>">Modifier</a> <a href="?action=delete&id=<?= $post->getId(); ?>">Supprimer</a></td>
+                <td> <a href="?action=toupdate&id=<?= $post->getId(); ?>">Modifier</a> <a href="?action=delete&id=<?= $post->getId(); ?>">Supprimer</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
-
-     
-        
-        
-
-        
     </div>
 </body>
 </html>
+
+

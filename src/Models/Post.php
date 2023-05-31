@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 namespace Ntimbablog\Portfolio\Models;
+use \DateTime;
 
 class Post
 {
     private int $id;
     private string $title;
     private string $content;
-    private string $creationDate;
+    private string $creationDate = '';
     private ?string $updateDate;
     private string $slug;
     private int $categoryId;
@@ -126,7 +127,7 @@ class Post
         return $this->content;
     }
 
-    public function getCreationDate() : string
+    public function getCreationDate() : ?string
     {
         return $this->creationDate;
     }
