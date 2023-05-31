@@ -16,7 +16,6 @@ $adminController = new AdminController();
 $postController = new PostController();
 $categoryController = new CategoryController();
 
-
 // Models
 
 
@@ -111,9 +110,32 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             }
             $adminController->handlePages();
             break;
-        case 'page' : 
-            $adminController->handlePage();
+        case 'toupdate' : 
+            $identifier = 0;
+            if( isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = (int) $_GET['id'];        
+                
+                $postController->toupdate($identifier);
+
+            }else{
+                $postController->displayAdminBlogPosts();
+            }
             break;
+        case 'update' : 
+
+            $data = [];
+            $identifier = null;
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $data = ['post_id' => $_GET['id']];
+            }
+            if( isset( $_POST ) && !empty( $_POST ) || isset( $_FILES['featured_image'] ) ) {
+                $data[] = $_POST;
+                $data['featured_image'] = $_FILES['featured_image'];  
+            }
+
+            $postController->updatePost($data);
+            break;
+
         case 'users' : 
             $adminController->handleUsers();
             break;
