@@ -134,7 +134,7 @@ class PostController
 
     }
 
-    public function toupdate($identifier) : void
+    public function toupdate(int $identifier) : void
     {
         // recupérér les éléments de la base de données
         $stringUtil = new StringUtil();
