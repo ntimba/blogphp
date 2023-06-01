@@ -36,14 +36,35 @@ class CommentController
             if( $postManager->getPost($postId) ){
                 if( ! $commentManager->getCommentId( $postComment->getContent() ) ){
                     $commentManager->addComment( $postComment );
-                    header('Location index.php');
                 }
             }
         }
     }
 
-    
-    
+    public function displayAdminPostComments() : void
+    {
+        // recupérer tout les posts
+        $commentManager = new CommentManager();
+        $comments = $commentManager->getAllComments();
+        
+        // les affichers
+        require('./views/backend/comments.php');
+    }
+
+
+    public function verifyComment(int $identifier) : void
+    {
+        // recupérer le commentaire
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getComment($identifier);
+
+        if( !$comment->getCommentVerify() ){
+            $comment->setCommentVerify(true);
+        }
+
+        // Mettre à jour le commentaire : 
+        $commentManager->updateComment($comment); 
+    }
 }
 
 
