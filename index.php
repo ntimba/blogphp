@@ -8,13 +8,18 @@ require __DIR__ . '/vendor/autoload.php';
 use Ntimbablog\Portfolio\Controllers\UserController;
 use Ntimbablog\Portfolio\Controllers\AdminController;
 use Ntimbablog\Portfolio\Controllers\PostController;
+use Ntimbablog\Portfolio\Controllers\commentController;
 use Ntimbablog\Portfolio\Controllers\CategoryController;
+
+
 
 $userController = new UserController();
 $adminController = new AdminController();
 
 $postController = new PostController();
+$commentController = new CommentController();
 $categoryController = new CategoryController();
+
 
 // Models
 
@@ -85,6 +90,18 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'adminblogposts' : 
             $postController->displayAdminBlogPosts();
             break;
+        case 'addcomment' : 
+            $data = [];
+            if( isset( $_POST ) && !empty( $_POST )) {
+                $data = $_POST;
+                $commentController->addComment($data);
+                $postId = (int) $data['post_id'];
+
+                header('Location: index.php?action=post&id=' . $postId);
+            }else{
+                header('Location: index.php?action=blog');
+            }
+            break;
         case 'addpost' : 
             $data = [];
             if( isset( $_POST ) && !empty( $_POST ) || isset( $_FILES['featured_image'] ) ) {
@@ -145,6 +162,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'logout' : 
             $adminController->logout();
             break;
+        default: 
+            echo "page d'accueil";
+        break;
     }
 }else{
     // Sera visible uniquement pour les personnes connecté

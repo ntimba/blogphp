@@ -20,24 +20,23 @@ class CommentManager
     }
 
     // Get user ID
-    public function getCommentId( string $content ): int
+    public function getCommentId( string $commentContent ): int
     {
-        $query = 'SELECT id FROM comment WHERE content = :content';
+        $query = 'SELECT comment_id FROM comment WHERE comment_content = :comment_content';
         $statement = $this->db->getConnection()->prepare($query);
-        $statement->bindParam(":content", $content);
+        $statement->bindParam(":comment_content", $commentContent);
         $statement->execute();
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result['id'] ?? 0;
     }
 
-    public function getComment( int $id ): mixed
+    public function getComment( int $comment_id ): mixed
     {
-
-        $query = 'SELECT id, content, commentedDate, idArticle, userId, validateComment WHERE id = :id';
+        $query = 'SELECT comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify WHERE comment_id = :comment_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'id' => $id
+            'comment_id' => $comment_id
         ]);
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -54,13 +53,12 @@ class CommentManager
 
 
 
-    public function getComments( int $idArticle ): mixed
+    public function getComments( int $comment_id ): mixed
     {
-
-        $query = 'SELECT id, content, commentedDate, userId, validateComment FROM comment WHERE idArticle = :idArticle';
+        $query = 'SELECT  comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify FROM comment WHERE comment_id = :comment_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'idArticle' => $idArticle
+            'comment_id' => $comment_id
         ]);
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -72,20 +70,19 @@ class CommentManager
         $comments = new Comment();
         $comments->hydrate( $result );
         return $comments;
-
     }
     
 
-    public function addComment(Comment $newComment) : void
+    public function addComment(Comment $comment) : void
     {
-        $query = 'INSERT INTO comment(content, commentedDate, idArticle, userId, validateComment) 
-                  VALUES(:content, NOW(), :idArticle, :userId, :validateComment)';
+        $query = 'INSERT INTO comment(comment_content, comment_date, comment_id_post, comment_user_id , comment_verify) 
+                  VALUES(:comment_content, NOW(), :comment_id_post, :comment_user_id , :comment_verify)';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'content' => $newComment->getContent(), 
-            'idArticle' => $newComment->getIdArticle(),
-            'userId' => $newComment->getUserId(),
-            'validateComment' => $newComment->getValidateComment() ? 1 : 0 // convert to boolean
+            'comment_content' => $comment->getContent(), 
+            'comment_id_post' => $comment->getPostId(),
+            'comment_user_id' => $comment->getUserId(),
+            'comment_verify' => $comment->getCommentVerify() ? 1 : 0 // convert to boolean
         ]);
     }
 
@@ -98,3 +95,4 @@ class CommentManager
         ]);
     }    
 }
+
