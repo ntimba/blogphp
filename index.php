@@ -90,6 +90,18 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'adminblogposts' : 
             $postController->displayAdminBlogPosts();
             break;
+        case 'adminpostcomments' : 
+            $commentController->displayAdminPostComments();
+            break;
+
+        case 'verifycomment' : 
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $commentController->verifyComment($identifier);
+                header('Location: index.php?action=adminpostcomments');
+            }
+            break;
+        
         case 'addcomment' : 
             $data = [];
             if( isset( $_POST ) && !empty( $_POST )) {
@@ -139,7 +151,6 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             }
             break;
         case 'update' : 
-
             $data = [];
             $identifier = null;
             if( isset($_GET['id']) && $_GET['id'] > 0 ){

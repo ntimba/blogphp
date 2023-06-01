@@ -154,8 +154,7 @@ class UserController
         {
             $email = $userData['email'];
             $password = $userData['password'];
-
-            debug($userData);
+            
             // recupérer l'utilisateur 
             $userManager = new UserManager();
             $getUserId = $userManager->getUserId( $email );

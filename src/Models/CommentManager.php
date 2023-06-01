@@ -33,24 +33,61 @@ class CommentManager
 
     public function getComment( int $comment_id ): mixed
     {
-        $query = 'SELECT comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify WHERE comment_id = :comment_id';
+        $query = 'SELECT comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify FROM comment WHERE comment_id = :comment_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
             'comment_id' => $comment_id
         ]);
 
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $commentData = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if ( $result === false ) {
+        if ( $commentData === false ) {
             return false;
         }
+
         
         $comment = new Comment();
-        $comment->hydrate( $result );
+
+        $comment = new Comment();
+        $comment->setId($commentData['comment_id']);
+        $comment->setContent($commentData['comment_content']);
+        $comment->setCommentedDate($commentData['comment_date']);
+        $comment->setPostId($commentData['comment_id_post']);
+        $comment->setUserId($commentData['comment_user_id']);
+        $comment->setCommentVerify($commentData['comment_verify']);
+        
         return $comment;
 
     }
 
+
+
+    public function getAllComments(): mixed
+    {
+        $query = 'SELECT  comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify FROM comment';
+        $statement = $this->db->getConnection()->prepare($query);
+        $statement->execute();
+
+        $commentsData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ( $commentsData === false ) {
+            return false;
+        }
+
+        foreach( $commentsData as $commentData ) {
+            $comment = new Comment();
+            $comment->setId($commentData['comment_id']);
+            $comment->setContent($commentData['comment_content']);
+            $comment->setCommentedDate($commentData['comment_date']);
+            $comment->setPostId($commentData['comment_id_post']);
+            $comment->setUserId($commentData['comment_user_id']);
+            $comment->setCommentVerify($commentData['comment_verify']);
+
+            $comments[] = $comment;
+        }
+        
+        return $comments;
+    }
 
 
     public function getComments( int $comment_id ): mixed
@@ -71,6 +108,18 @@ class CommentManager
         $comments->hydrate( $result );
         return $comments;
     }
+    
+
+    public function updateComment(Comment $comment) : void
+    {
+        $query = 'UPDATE comment SET comment_verify = :comment_verify WHERE comment_id = :comment_id';
+        $statement = $this->db->getConnection()->prepare($query);
+        $statement->execute([
+            'comment_id' => $comment->getId(),
+            'comment_verify' => $comment->getCommentVerify(),
+        ]);
+    }
+
     
 
     public function addComment(Comment $comment) : void
