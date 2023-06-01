@@ -12,7 +12,7 @@ use Ntimbablog\Portfolio\Models\CommentManager;
 
 class CommentController
 {
-    public function addComment($commentData)
+    public function addComment(array $commentData) : void
     {
         if( 
             isset( $commentData['post_comment'] ) && !empty( $commentData['post_comment'] ) &&
@@ -31,8 +31,6 @@ class CommentController
                 'postId' => $postId,
                 'userId' => $userId
             ]);
-                        
-            // debug( $postComment );
             
             // Si le post exist, on ajoute le commentaire
             if( $postManager->getPost($postId) ){
