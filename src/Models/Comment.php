@@ -10,9 +10,9 @@ class Comment
     private int $id;
     private string $content;
     private string $commentedDate;
-    private int $idArticle;
+    private int $postId;
     private int $userId;
-    private ?bool $validateComment = false;
+    private ?bool $commentVerify = false;
         
     public function __construct( array $userdata = [])
     {
@@ -54,11 +54,11 @@ class Comment
         }
     }
         
-    public function setIdArticle(int $idArticle) : void
+    public function setPostId(int $postId) : void
     {
-        if( is_numeric( $idArticle ) && !empty($idArticle) )
+        if( is_numeric( $postId ) && !empty($postId) )
         {
-            $this->idArticle = $idArticle;
+            $this->postId = $postId;
         }
     }
 
@@ -70,9 +70,9 @@ class Comment
         }
     } 
     
-    public function setValidateComment(bool $validateComment) : void
+    public function setCommentVerify(bool $commentVerify) : void
     {
-        $this->validateComment = $validateComment;
+        $this->commentVerify = $commentVerify;
     }  
 
     /*****************************
@@ -84,7 +84,6 @@ class Comment
         return $this->id;
     }
     
-    
     public function getContent() : string
     {
         return $this->content;
@@ -95,9 +94,9 @@ class Comment
         return $this->commentedDate;
     }
 
-    public function getIdArticle() : int
+    public function getPostId() : int
     {
-        return $this->idArticle;
+        return $this->postId;
     }
 
     public function getUserId() : int
@@ -105,9 +104,9 @@ class Comment
         return $this->userId;
     }
 
-    public function getValidateComment() : bool
+    public function getCommentVerify() : bool
     {
-        return $this->validateComment;
+        return $this->commentVerify;
     }
     
 }

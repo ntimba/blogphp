@@ -21,8 +21,9 @@
 
         <!-- Afficher les commentaires -->
         <div class="comment">
-            <form action="#" method="POST">
+            <form action="?action=addcomment" method="POST">
                 <textarea name="post_comment" id="" cols="40" rows="4"></textarea> <br>
+                <input type="text" name="post_id" value="<?= $post->getId(); ?>" hidden>
                 <button type="submit" name="submit">Commenter</button>
             </form>
 
