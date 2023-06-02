@@ -33,7 +33,7 @@
                 <td><?= $comment->getContent(); ?></td>
                 <td><?= $comment->getCommentedDate(); ?></td>
                 <td><?= $comment->getCommentVerify(); ?></td>
-                <td> <a href="?action=verifycomment&id=<?= $comment->getId(); ?>">Vérifier</a> <a href="?action=delete&id=<?= $comment->getId(); ?>">Supprimer</a></td>
+                <td> <a href="?action=verifycomment&id=<?= $comment->getId(); ?>">Vérifier</a> <a href="?action=deletecomment&id=<?= $comment->getId(); ?>">Supprimer</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
