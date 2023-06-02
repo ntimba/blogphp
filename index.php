@@ -63,7 +63,6 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
                 $data = $_POST;
             }
             $userController->createUser($data);
-
             break;
         case 'login' : 
             $data = [];
@@ -76,6 +75,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
 }else{
     $pageController->handleAbout();
 }
+
+
+// Créer une fonction qui va recevoir comme paramètres un tableau, 
 
 
 /**
@@ -101,7 +103,16 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
                 header('Location: index.php?action=adminpostcomments');
             }
             break;
-        
+        case 'deletecomment' : 
+            $identifier = 0;
+            if( isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = (int) $_GET['id'];
+                $commentController->deleteComment($identifier);
+            }else{
+                $commentController->displayAdminPostComments();
+            }
+            $adminController->handlePages();
+            break;
         case 'addcomment' : 
             $data = [];
             if( isset( $_POST ) && !empty( $_POST )) {
@@ -129,7 +140,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             }
             $categoryController->insertCategory($data);
             break;
-        case 'delete' : 
+        case 'deletepost' : 
             $identifier = 0;
             if( isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = (int) $_GET['id'];

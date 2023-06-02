@@ -65,6 +65,15 @@ class CommentController
         // Mettre à jour le commentaire : 
         $commentManager->updateComment($comment); 
     }
+
+    public function deleteComment(int $identifier) : void
+    {
+        $commentManager = new CommentManager();
+        $commentManager->deleteComment($identifier);
+
+        $comments = $commentManager->getAllComments();
+        $this->displayAdminPostComments();
+    }
 }
 
 

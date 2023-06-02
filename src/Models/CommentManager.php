@@ -135,13 +135,13 @@ class CommentManager
         ]);
     }
 
-    public function deleteComment( int $id ) : void
+    public function deleteComment( int $comment_id ) : void
     {
-        $query = 'DELETE FROM comment WHERE id = :id';
+        $query = 'DELETE FROM comment WHERE comment_id = :comment_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'id' => $id
+            'comment_id' => $comment_id
         ]);
-    }    
+    }
 }
 
