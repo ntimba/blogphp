@@ -23,11 +23,6 @@ $categoryController = new CategoryController();
 
 // Models
 
-function debug($var){
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-}
 // la fonction de debugage
 
 /**
@@ -189,7 +184,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $adminController->logout();
             break;
         default: 
-            // echo "page d'accueil";
+            echo "page d'accueil";
         break;
     }
 }else{
