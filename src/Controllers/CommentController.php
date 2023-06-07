@@ -19,7 +19,7 @@ class CommentController
             isset( $commentData['post_id'] ) && !empty( $commentData['post_id'] ) 
             )
         {
-            $postManager = new PostManager;
+            $postManager = new PostManager();
             $commentManager = new CommentManager();
 
             $postId = (int) $commentData['post_id'];

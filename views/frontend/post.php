@@ -7,9 +7,7 @@
     <title>Ajouter un article </title>
 </head>
 <body>
-
     <div class="center">
-
         <!-- Afficher l'article -->
         <h1><?= $post->getTitle(); ?></h1> <br>
         <p>Date : <?= $post->getCreationDate(); ?> </p> 
@@ -27,7 +25,19 @@
                 <button type="submit" name="submit">Commenter</button>
             </form>
 
+            <br><br>
             <div class="list-comments">
+            <?php foreach($allComments as $comment): ?>
+                <div class="comment">
+                    <img src="<?= $comment['userProfilePicture']; ?>" alt="#">
+                    <div class="name">
+                        <?= $comment['firstname'] . ' ' .$comment['lastname']; ?>
+                    </div>
+                    <div class="comment_content">
+                        <?= $comment['commentContent']; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>  
 
             </div>
             

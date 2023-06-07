@@ -23,7 +23,6 @@ $categoryController = new CategoryController();
 
 // Models
 
-
 // la fonction de debugage
 
 /**

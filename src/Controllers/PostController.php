@@ -7,11 +7,13 @@ namespace Ntimbablog\Portfolio\Controllers;
 use Ntimbablog\Portfolio\Models\CategoryManager;
 use Ntimbablog\Portfolio\Models\Post;
 use Ntimbablog\Portfolio\Models\PostManager;
+use Ntimbablog\Portfolio\Models\User;
 use Ntimbablog\Portfolio\Models\UserManager;
 
 use Ntimbablog\Portfolio\Helpers\StringUtil;
 
 use Ntimbablog\Portfolio\Controllers\CategoryController;
+use Ntimbablog\Portfolio\Models\CommentManager;
 
 class PostController
 {
@@ -108,7 +110,23 @@ class PostController
         // Afficher la personne qui a écrit
         $user = $userManager->getUser($post->getUserId());
 
+        // Afficher les commentaires 
+        $commentManager = new CommentManager();
+        $comments = $commentManager->getPostComments($post->getId());
         
+        $allComments = [];
+        foreach( $comments as $comment )
+        {
+            $user = $userManager->getUser($comment->getUserId());
+            $detailsComment['firstname'] = $user->getFirstname();
+            $detailsComment['lastname'] = $user->getLastname();
+            $detailsComment['userProfilePicture'] = $user->getProfilePicture();
+            $detailsComment['commentContent'] = $comment->getContent();
+            $detailsComment['commentDate'] = $comment->getCommentedDate();
+
+            $allComments[] = $detailsComment;
+        }
+
         require('./views/frontend/post.php');
     }
 
