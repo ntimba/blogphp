@@ -54,8 +54,8 @@ class UserManager
         $user->setToken($result['user_token']);
         $user->setProfilePicture($result['user_profile_picture']);
         $user->setBiography($result['user_biography']);
-        $user->setStatut($result['user_statut']);
-        $user->setAuditedAccount($result['user_audited_account']);
+        $user->setStatut((bool)$result['user_statut']);
+        $user->setAuditedAccount((bool)$result['user_audited_account']);
         
         return $user;
     }
@@ -87,7 +87,7 @@ class UserManager
 
     public function updateUser(User $user): void
     {
-        $query = 'UPDATE user SET firstname = :firstname, lastname = :lastname, email = :email, password = :password, registrationDate = :registrationDate, role = :role, token = :token, profilePicture = :profilePicture, statut = :statut, auditedAccount = :auditedAccount WHERE id = :id';
+        $query = 'UPDATE user SET user_firstname = :user_firstname, user_lastname = :user_lastname, user_email = :user_email, user_password = :user_password, user_registration_date = :user_registration_date, user_role = :user_role, user_token = :user_token, user_profile_picture = :user_profile_picture, user_biography = :user_biography, user_statut = :user_statut, user_audited_account = :user_audited_account WHERE user_id = :user_id';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
             'user_id' => $user->getId(),
@@ -97,9 +97,9 @@ class UserManager
             'user_password' => $user->getPassword(),
             'user_role' => $user->getRole(),
             'user_registration_date' => $user->getRegistrationDate(),
-            'user_token' => $user->getRole(),
-            'user_profile_picture' => $user->getToken(),
-            'user_biography' => $user->getProfilePicture(),
+            'user_token' => $user->getToken(),
+            'user_profile_picture' => $user->getProfilePicture(),
+            'user_biography' => $user->getBiography(),
             'user_statut' => $user->getStatut(),
             'user_audited_account' => $user->getAuditedAccount(),
         ]);

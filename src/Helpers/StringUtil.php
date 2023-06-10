@@ -26,4 +26,24 @@ class StringUtil
         $capitalLetter = strtoupper(substr($string, 0, 1)) . strtolower(substr($string, 1));
         return $capitalLetter;
     }
+
+    public function maskEmail($emailAddress) {
+        $addressParts = explode('@', $emailAddress);
+        $localPart = $addressParts[0];
+        $domain = $addressParts[1];
+    
+        $firstTwoLetters = substr($localPart, 0, 2);
+        $tld = end(explode('.', $domain));
+    
+        $maskedDomain = str_repeat('*', strlen($domain) - strlen($tld) - 1);
+    
+        $maskedEmail = $firstTwoLetters . str_repeat('*', strlen($localPart) - 2) . '@' . $maskedDomain . '.' . $tld;
+    
+        return $maskedEmail;
+    }
+    
+    
+    
 }
+
+

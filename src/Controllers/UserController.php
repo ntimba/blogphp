@@ -5,10 +5,10 @@ declare(strict_types=1);
 // Utiliser les namespaces
 namespace Ntimbablog\Portfolio\Controllers;
 
-
 use Ntimbablog\Portfolio\Models\User;
 use Ntimbablog\Portfolio\Models\UserManager;
-
+use Ntimbablog\Portfolio\Helpers\StringUtil;
+use Ntimbablog\Portfolio\Models\FilesManager;
 
 class UserController
 {
@@ -201,6 +201,82 @@ class UserController
             $_SESSION['user_role'] = $user->getRole();
         }else{
             $this->errors[] = self::INVALID_CONNECTION_DATA;
+        }
+    }
+
+    public function manageProfile($identifier) : void
+    {
+        $stringUtil = new StringUtil();
+
+        // recupéréer les données de la base de données
+        $userManager = new UserManager();
+        $userData = $userManager->getUser($identifier);
+
+
+        // Préparer les données pour l'affichage        
+        $userDetails['firstname'] = $userData->getFirstname();
+        $userDetails['lastname'] = $userData->getLastname();
+        $userDetails['email'] = $userData->getEmail();
+        $userDetails['profile_picture'] = $userData->getFirstname();
+        $userDetails['biography'] = $userData->getBiography();
+
+
+        // inclure la page d'affichage
+        require('./views/backend/profile.php');
+    }
+
+    public function updateProfile(array $data) : void
+    {
+        // recupérer les données de l'utilisateur
+        $userManager = new UserManager();
+        $user = $userManager->getUser($_SESSION['user_id']);
+
+        if( 
+            isset( $data['firstname'] ) && !empty( $data['firstname'] ) && 
+            isset( $data['lastname'] ) && !empty( $data['lastname'] ) && 
+            isset( $data['email'] ) && !empty( $data['email'] ) 
+         )
+        {
+            // Si les champs suivant sont remplis on le met dans un objet 
+            $user->setFirstname($data['firstname']);
+            $user->setLastname($data['lastname']);
+            $user->setEmail($data['email']);
+
+            // Si les données de mot de passe sont remplis, on modifie l'objet
+            if(
+                isset($data['old_password']) && !empty( $data['old_password'] ) &&
+                isset($data['new_password']) && !empty( $data['new_password'] ) &&
+                isset($data['repeat_new_password']) && !empty( $data['repeat_new_password'] )
+                )
+            {
+                // Si l'ancien mot de passe est identique avec le mot de passe de la base de données, on change le mot de passe
+                if( password_verify($data['old_password'],$user->getPassword() ) )
+                {
+                    if( $this->checkPassword($data['new_password'], $data['repeat_new_password']) )
+                    {
+                        $user->setPassword( password_hash($data['new_password'], PASSWORD_DEFAULT) );
+                    }
+                    // Si les new_password et repeat_new_password est identique, on va hasher le mot de passe et la mettre dans l'objet
+                    // Vérifier la valididé de mot de passe 
+                }
+            }
+
+            if(isset( $data['biography'] ) && !empty( $data['biography'] ))
+            {
+                $user->setBiography( $data['biography'] );
+            }
+
+            // Vérifier le fichier a été envoyer
+            $filesManager = new FilesManager();
+            if( $data['profile_image']['error'] == UPLOAD_ERR_OK )
+            {
+                // importer le fichier 
+                $profilePicture = $filesManager->importFile($data['profile_image'], './assets/uploads/');
+                $user->setProfilePicture($profilePicture);
+            }
+
+            // Modifier l'utilisateur
+            $userManager->updateUser($user);   
         }
     }
 
