@@ -162,19 +162,6 @@ class User
         }
     }
 
-    // public function setStatut(bool $statut): void
-    // {
-    //     if (is_bool($statut) || is_int($statut)) {
-    //         if ($statut <= 1) {
-    //             $this->statut = $statut;
-    //         } else {
-    //             throw new OutOfBoundsException(self::DO_NOT_EXCEED_1);
-    //         }
-    //     } else {
-    //         throw new InvalidArgumentException(self::BOOLEAN_OR_INTEGER);
-    //     }
-    // }
-
     public function setStatut(bool $statut): void
     {
         if (is_bool($statut) || is_int($statut)) {
@@ -187,8 +174,6 @@ class User
             throw new InvalidArgumentException(self::BOOLEAN_OR_INTEGER);
         }
     }
-
-    
     
     public function setAuditedAccount(bool $audited): void
     {

@@ -204,7 +204,7 @@ class UserController
         }
     }
 
-    public function manageProfile($identifier) : void
+    public function manageProfile(int $identifier) : void
     {
         $stringUtil = new StringUtil();
 

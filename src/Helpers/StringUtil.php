@@ -27,7 +27,8 @@ class StringUtil
         return $capitalLetter;
     }
 
-    public function maskEmail($emailAddress) {
+    public function maskEmail(string $emailAddress) : string
+    {
         $addressParts = explode('@', $emailAddress);
         $localPart = $addressParts[0];
         $domain = $addressParts[1];
