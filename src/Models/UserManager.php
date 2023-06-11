@@ -96,37 +96,6 @@ class UserManager
         return $users;
     }
 
-    public function getCategories() : array|bool
-    {
-        /**
-         * La fonction retourne un tableau des objets
-         * 
-        */
-        $query = 'SELECT category_id, category_name, category_slug, category_description, category_creation_date, category_id_parent FROM category';
-        $statement = $this->db->getConnection()->prepare($query);
-        $statement->execute();
-
-        $categoriesData = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        if ( $categoriesData === false ) {
-            return false;
-        }
-
-        $categories = [];
-        foreach( $categoriesData as $categoryData ){
-            $category = new Category();
-            $category->setId($categoryData['category_id']);
-            $category->setName($categoryData['category_name']);
-            $category->setSlug($categoryData['category_slug']);
-            $category->setDescription($categoryData['category_description']);
-            $category->setCreationDate($categoryData['category_creation_date']);
-            $category->setIdParent($categoryData['category_id_parent']);
-            $categories[] = $category;
-        }
-
-        return $categories;
-    }
-
     public function createUser(object $newuser) : void
     {
         // code

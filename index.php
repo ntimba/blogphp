@@ -98,7 +98,6 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             if( isset($_GET['id']) && $_GET['id'] > 0 ){
                 $identifier = (int) $_GET['id'];
                 $userController->activate($identifier);
-                // header('Location: index.php?action=users');
             }
             break;
 
