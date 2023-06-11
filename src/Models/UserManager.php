@@ -29,7 +29,7 @@ class UserManager
 
     }
 
-    public function getUser( int $id ): mixed
+    public function getUser( int $id ): object | bool
     {
         $query = 'SELECT user_id, user_firstname, user_lastname, user_email, user_password, user_registration_date, user_role, user_token, user_profile_picture, user_biography, user_statut, user_audited_account FROM user WHERE user_id = :user_id';
         $statement = $this->db->getConnection()->prepare($query);
@@ -60,9 +60,71 @@ class UserManager
         return $user;
     }
 
-    public function getAllUsers(): void
+    public function getAllUsers(): array|bool
     {
-        // code
+        $query = 'SELECT user_id, user_firstname, user_lastname, user_email, user_password, user_registration_date, user_role, user_token, user_profile_picture, user_biography, user_statut, user_audited_account FROM user';
+        $statement = $this->db->getConnection()->prepare($query);
+        $statement->execute();
+
+        $usersData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ( $usersData === false ) {
+            return false;
+        }
+
+        $users = [];
+
+        foreach( $usersData as $userData )
+        {
+            $user = new User();
+            $user->setId($userData['user_id']);
+            $user->setFirstname($userData['user_firstname']);
+            $user->setLastname($userData['user_lastname']);
+            $user->setEmail($userData['user_email']);
+            $user->setPassword($userData['user_password']);
+            $user->setRegistrationDate($userData['user_registration_date']);
+            $user->setRole($userData['user_role']);
+            $user->setToken($userData['user_token']);
+            $user->setProfilePicture($userData['user_profile_picture']);
+            $user->setBiography($userData['user_biography']);
+            $user->setStatut((bool)$userData['user_statut']);
+            $user->setAuditedAccount((bool)$userData['user_audited_account']);
+            $users[] = $user;
+        }
+        
+
+        return $users;
+    }
+
+    public function getCategories() : array|bool
+    {
+        /**
+         * La fonction retourne un tableau des objets
+         * 
+        */
+        $query = 'SELECT category_id, category_name, category_slug, category_description, category_creation_date, category_id_parent FROM category';
+        $statement = $this->db->getConnection()->prepare($query);
+        $statement->execute();
+
+        $categoriesData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if ( $categoriesData === false ) {
+            return false;
+        }
+
+        $categories = [];
+        foreach( $categoriesData as $categoryData ){
+            $category = new Category();
+            $category->setId($categoryData['category_id']);
+            $category->setName($categoryData['category_name']);
+            $category->setSlug($categoryData['category_slug']);
+            $category->setDescription($categoryData['category_description']);
+            $category->setCreationDate($categoryData['category_creation_date']);
+            $category->setIdParent($categoryData['category_id_parent']);
+            $categories[] = $category;
+        }
+
+        return $categories;
     }
 
     public function createUser(object $newuser) : void

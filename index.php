@@ -25,6 +25,7 @@ $categoryController = new CategoryController();
 
 // la fonction de debugage
 
+
 /**
  *  Front 
  * 
@@ -92,6 +93,33 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'admin' :
             $adminController->dashboard();
             break;
+
+        case 'activateuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->activate($identifier);
+                // header('Location: index.php?action=users');
+            }
+            break;
+
+        case 'restrictuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->restrict($identifier);
+                header('Location: index.php?action=users');
+            }
+            break;
+        case 'deleteuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->delete($identifier);
+                header('Location: index.php?action=users');
+            }
+            break;
+        case 'users' :
+            $userController->getAllUsers();
+            break;
+
         case 'adminblogposts' : 
             $postController->displayAdminBlogPosts();
             break;

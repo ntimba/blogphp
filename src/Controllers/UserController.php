@@ -102,6 +102,64 @@ class UserController
     public function getAllUsers(): void
     {
         // Retourne la liste des utilisateurs
+        $userManager = new UserManager();
+        $users = $userManager->getAllUsers();
+
+        require('./views/backend/users.php');
+    }
+
+    public function activate(int $identifier) : void
+    {
+        // recupérer et créer l'objet utilisateur
+        $userManager = new UserManager();
+        $user = $userManager->getUser($identifier);
+
+        
+        // Si l'utilisateur existe on active l'utilisateur
+        if( $userManager->getUser($identifier) )
+        {
+            // modifier le user_statut (si c'est false, sinon on affiche un message d'erreur)
+            if( !$user->getStatut() ){
+                $user->setStatut(true);
+            }else{
+                // Enventuellement créer un message flash
+                echo "Cet utilisateur est déjà activé";
+                $this->getAllUsers();
+            }
+        }else{
+            $this->getAllUsers();
+        }
+
+        // Si l'utilisateur n'existe pas, on renvoi à la page ou tous les utilisateurs seront afficher.
+        
+    }
+
+    public function restrict(int $identifier) : void
+    {   
+        // recupérer et créer l'objet utilisateur
+        $userManager = new UserManager();
+        $user = $userManager->getUser($identifier);
+        
+        // modifier le user_statut (si c'est true, sinon on affiche un message d'erreur)
+        if( $user->getStatut() ){
+            $user->setStatut(false);
+        }else{
+            echo "Cet utilisateur est déjà restreint";
+        }
+    }
+
+    public function delete(int $identifier): void
+    {
+        // recupérer et créer l'objet utilisateur
+        $userManager = new UserManager();
+        $user = $userManager->getUser($identifier);
+        
+        // modifier le user_statut (si c'est true, sinon on affiche un message d'erreur)
+        if( $user->getStatut() ){
+            $user->setStatut(false);
+        }else{
+            echo "Cet utilisateur est déjà restreint";
+        }
     }
 
     public function editUser(array $userData): void
@@ -109,10 +167,6 @@ class UserController
         // modifie l'utilisateur 
     }
 
-    public function deleteUser(int $id): void
-    {
-        // supprime untilisateur 
-    }
 
     public function checkPermission(): void
     {

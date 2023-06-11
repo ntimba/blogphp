@@ -42,9 +42,6 @@ class StringUtil
     
         return $maskedEmail;
     }
-    
-    
-    
 }
 
 
