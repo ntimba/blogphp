@@ -113,7 +113,6 @@ class UserController
         // recupérer et créer l'objet utilisateur
         $userManager = new UserManager();
         $user = $userManager->getUser($identifier);
-
         
         // Si l'utilisateur existe on active l'utilisateur
         if( $userManager->getUser($identifier) )
@@ -121,10 +120,16 @@ class UserController
             // modifier le user_statut (si c'est false, sinon on affiche un message d'erreur)
             if( !$user->getStatut() ){
                 $user->setStatut(true);
+                
+                // Mettre à jour la base de données
+                $userManager->updateUser($user);
+                // Afficher la liste des utilisateurs
+                $this->getAllUsers();
             }else{
                 // Enventuellement créer un message flash
                 echo "Cet utilisateur est déjà activé";
                 $this->getAllUsers();
+
             }
         }else{
             $this->getAllUsers();
@@ -138,13 +143,25 @@ class UserController
     {   
         // recupérer et créer l'objet utilisateur
         $userManager = new UserManager();
-        $user = $userManager->getUser($identifier);
+        $user = $userManager->getUser($identifier);        
         
-        // modifier le user_statut (si c'est true, sinon on affiche un message d'erreur)
-        if( $user->getStatut() ){
-            $user->setStatut(false);
+        // Si l'utilisateur existe on active l'utilisateur
+        if( $userManager->getUser($identifier) )
+        {
+            // modifier le user_statut (si c'est false, sinon on affiche un message d'erreur)
+            if( $user->getStatut() ){
+                $user->setStatut(false);
+                // Mettre àjour l'utilisateur
+                $userManager->updateUser($user);
+
+                $this->getAllUsers();
+            }else{
+                // Enventuellement créer un message flash
+                echo "Cet utilisateur est déjà restreint";
+                $this->getAllUsers();
+            }
         }else{
-            echo "Cet utilisateur est déjà restreint";
+            $this->getAllUsers();
         }
     }
 
@@ -154,11 +171,15 @@ class UserController
         $userManager = new UserManager();
         $user = $userManager->getUser($identifier);
         
-        // modifier le user_statut (si c'est true, sinon on affiche un message d'erreur)
-        if( $user->getStatut() ){
-            $user->setStatut(false);
+        // Si l'utilisateur existe on active l'utilisateur
+        if( $userManager->getUser($identifier) )
+        {
+            // Demander de taper l' nom de l'utilisateur au complet avant de le supprimer
+            // Supprimer l'utilisateur
+            $userManager->deleteUser($identifier);
+            $this->getAllUsers();
         }else{
-            echo "Cet utilisateur est déjà restreint";
+            $this->getAllUsers();
         }
     }
 

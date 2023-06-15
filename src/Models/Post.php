@@ -124,7 +124,7 @@ class Post
 
     public function getContent() : string
     {
-        return $this->content;
+        return nl2br($this->content);
     }
 
     public function getCreationDate() : ?string

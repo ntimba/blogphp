@@ -241,9 +241,9 @@ class User
         return $this->biography;
     }
 
-    public function getStatut() : bool
+    public function getStatut() : int
     {
-        return $this->statut;
+        return isset( $this->statut ) ? (int) $this->statut : 0;
     }
 
     public function getAuditedaccount() : int

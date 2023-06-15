@@ -10,8 +10,10 @@ use Ntimbablog\Portfolio\Controllers\AdminController;
 use Ntimbablog\Portfolio\Controllers\PostController;
 use Ntimbablog\Portfolio\Controllers\commentController;
 use Ntimbablog\Portfolio\Controllers\CategoryController;
+use Ntimbablog\Portfolio\Controllers\HomeController;
 
 
+$homeController = new HomeController();
 
 $userController = new UserController();
 $adminController = new AdminController();
@@ -21,10 +23,11 @@ $commentController = new CommentController();
 $categoryController = new CategoryController();
 
 
+
+
 // Models
 
 // la fonction de debugage
-
 
 /**
  *  Front 
@@ -33,8 +36,8 @@ $categoryController = new CategoryController();
 
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
-        case 'about' :
-            $pageController->handleAbout();
+        case 'home' :
+            $homeController->callToAction();
             break;
         case 'skills' : 
             $pageController->handleSkills();
@@ -98,6 +101,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             if( isset($_GET['id']) && $_GET['id'] > 0 ){
                 $identifier = (int) $_GET['id'];
                 $userController->activate($identifier);
+                // header('Location: index.php?action=users');
             }
             break;
 
@@ -105,14 +109,12 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             if( isset($_GET['id']) && $_GET['id'] > 0 ){
                 $identifier = (int) $_GET['id'];
                 $userController->restrict($identifier);
-                header('Location: index.php?action=users');
             }
             break;
         case 'deleteuser' :
             if( isset($_GET['id']) && $_GET['id'] > 0 ){
                 $identifier = (int) $_GET['id'];
                 $userController->delete($identifier);
-                header('Location: index.php?action=users');
             }
             break;
         case 'users' :
@@ -122,7 +124,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'adminblogposts' : 
             $postController->displayAdminBlogPosts();
             break;
-        case 'adminpostcomments' : 
+        case 'comments' : 
             $commentController->displayAdminPostComments();
             break;
 
