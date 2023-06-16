@@ -1,5 +1,5 @@
 {
-  "name": "blogphp",
+  "name": "blog_personnel",
   "version": "1.0.0",
   "description": "Personal website showcasing my online portfolio, which includes my latest projects and professional skills.",
   "main": "index.js",
@@ -7,5 +7,17 @@
     "sass": "sass --watch ./assets/sass/main.scss:./assets/css/style.css"
   },
   "author": "Ntimba",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntimba/blogphp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ntimba/blogphp/issues"
+  },
+  "homepage": "https://github.com/ntimba/blogphp#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "bootstrap-icons": "^1.10.5"
+  }
 }

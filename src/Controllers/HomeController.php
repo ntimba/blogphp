@@ -14,7 +14,7 @@ class HomeController
 {
     public function callToAction() : void
     {
-        
+
         require("./views/frontend/home.php");
     }
 
