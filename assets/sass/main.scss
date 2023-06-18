@@ -1,9 +1,25 @@
+// Import bootstrap icons
+// @import '../../node_modules/bootstrap-icons/font/bootstrap-icons.scss';
+
 // Import des style de Bootstrap
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 /* CUSTOM CSS */
 
+// Base
+@import './base/reset';
+
 // Navigation
 @import './layout/header';
 @import './layout/navigation';
 
+// components
+@import './components/buttons';
+@import './components/title';
+
+// Pages
+@import './pages/homepage';
+
+// Layout
+@import './layout/hero';
+@import './layout/footer';

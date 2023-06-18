@@ -1,0 +1,48 @@
+.hero{
+    margin-top: 5rem;
+    &__content{
+        // height: 650px;
+    }
+
+    .name{
+        color: #042C74;
+    }
+
+    .profile-image{
+        margin-bottom: 1rem;
+    }
+    
+    &__image{
+        // background-image: url('/assets/img/aboutme_img.png');
+        // background-repeat: no-repeat;
+        // background-size: 100% 100%;
+        // background-size: cover;
+        // background-position: center;
+        // background-image: url('/assets/img/aboutme_img.png');
+
+
+        img, video{
+            max-width: 100%;
+            height: auto;
+        }
+
+        img, svg, video, canvas, audio, iframe, embed{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    a.button--secondary{
+        display: inline;
+    }
+
+    &__socialmedia{
+        margin-top: 3rem;
+        list-style: none;
+        gap: 1rem;
+        font-size: 1.5rem;
+        a{
+            color: #000;
+        }
+    }
+}
