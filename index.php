@@ -37,7 +37,7 @@ $categoryController = new CategoryController();
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
         case 'home' :
-            $homeController->callToAction();
+            $homeController->getHome();
             break;
         case 'skills' : 
             $pageController->handleSkills();
@@ -76,7 +76,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             break;
     }
 }else{
-    $pageController->handleAbout();
+    // $pageController->handleAbout();
+    $homeController->getHome();
+
 }
 
 
@@ -235,7 +237,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $adminController->logout();
             break;
         default: 
-            echo "page d'accueil";
+            // echo "page d'accueil";
+            // $homeController->getHome();
+
         break;
     }
 }else{

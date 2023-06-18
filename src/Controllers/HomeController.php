@@ -12,7 +12,7 @@ use Ntimbablog\Portfolio\Models\CommentManager;
 
 class HomeController
 {
-    public function callToAction() : void
+    public function getHome() : void
     {
 
         require("./views/frontend/home.php");
