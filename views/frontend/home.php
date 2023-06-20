@@ -6,7 +6,7 @@
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <title>Accueil</title>    
+    <title><?= $pageTitle; ?></title>    
 </head>
 <body>
     <!-- Menu -->
@@ -20,7 +20,7 @@
                 <span>Appel moi +41 79 221 21 00 / hello@ntimba.com</span>
             </div> -->
             <div class="downloadcv d-sm-none d-md-block d-none d-sm-block">
-                <a href="#">Download CV <i class="bi bi-download"></i></a>
+                <a href="?action=downloadcv">Télécharger mon CV <i class="bi bi-download"></i></a>
             </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -75,29 +75,27 @@
         <div class="row">
             <div class="col-md mt-3 mb-3 title">
                 <div class="title--page">
-                    À propos de moi
+                    <?= $pageTitle; ?>
                 </div>
             </div>
         </div>
 
         <div class="hero">
             <div class="row">
-                <div class="col-md-6 hero__content">
+                <div class="col-md-6 mb-5 hero__content">
                     <div class="row">
-                        <h1 class="title--hero">Salut,<br> Je suis <span class="name">Ntimba</span></h1>
+                        <h1 class="title--hero">Salut,<br> Je suis <span class="name"><?= $userData->getFirstname() ?></span></h1>
                         <h3 class="title--sub">Developpeur d'application php</h3>
-                        <p>Cherchez-vous un développeur web PHP pour booster votre entreprise ? Unissons-nous ! Contactez-moi bour concretiser vos
-    projets et propulser votre présence en ligne</p>
+                        <p><?= $userData->getBiography(); ?></p>
                     </div>
                     <div class="row">
-                        <div class="rounded-image profile-image">
-                            <img class="" src="/assets/uploads/moi.jpg" alt="Chancy Ntimba">
-                        </div>
-
-                        <a class="btn button button--secondary" href="">Contacter Moi <i class="bi bi-arrow-right"></i></a>
+                        <ul class="hero__buttons d-flex justify-content-start">
+                            <li><a class="btn button button--primary hero__content__link" href="?action=contact">Contacter Moi <i class="bi bi-person-rolodex"></i></a></li>
+                            <li><a class="btn button button--secondary hero__content__link" href="?action=downloadcv">Télécharger mon cv <i class="bi bi-download"></i></a></li> 
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-6 hero__image">
+                <div class="col-md-6 hero__image d-none d-sm-block d-sm-none d-md-block">
                     <img src="/assets/img/aboutme_img.png" alt="background image">
                 </div>
             </div>
@@ -107,7 +105,7 @@
 </div>
 
 
-<footer>
+<footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -118,24 +116,24 @@
 
             <div class="col-md-6">
                 <ul class="footer__menu d-flex justify-content-end">
-                    <li><a href="#">mensions légales</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Cookies</a></li>
-                    <li><a href="#">CGU</a></li>
+                    <li><a class="footer__menu__link" href="#">mensions légales</a></li>
+                    <li><a class="footer__menu__link" href="#">Politique de confidentialité</a></li>
+                    <li><a class="footer__menu__link" href="#">Cookies</a></li>
+                    <li><a class="footer__menu__link" href="#">CGU</a></li>
                 </ul>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <div class="copyright">
+                <div class="footer__copyright">
                     <span>All rights reserved © Ntimba Software 2023</span>
                 </div>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-                <ul class="hero__socialmedia d-flex justify-content-start">
-                    <li><a href="https://github.com/ntimba/"><i class="bi bi-linkedin"></i></a></li>
-                    <li><a href="#"><i class="bi bi-github"></i></a></li>
+                <ul class="footer__socialmedia d-flex justify-content-start">
+                    <li><a class="footer__socialmedia__link" href="https://github.com/ntimba/"><i class="bi bi-linkedin"></i></a></li>
+                    <li><a class="footer__socialmedia__link" href="#"><i class="bi bi-github"></i></a></li>
                 </ul>
             </div>
         </div>

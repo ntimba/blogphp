@@ -3,17 +3,18 @@ session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
-
 // User controller
 use Ntimbablog\Portfolio\Controllers\UserController;
 use Ntimbablog\Portfolio\Controllers\AdminController;
 use Ntimbablog\Portfolio\Controllers\PostController;
 use Ntimbablog\Portfolio\Controllers\commentController;
 use Ntimbablog\Portfolio\Controllers\CategoryController;
-use Ntimbablog\Portfolio\Controllers\HomeController;
+use Ntimbablog\Portfolio\Controllers\PageController;
+use Ntimbablog\Portfolio\Models\FilesManager;
 
 
-$homeController = new HomeController();
+// $homeController = new HomeController();
+$pageController = new PageController();
 
 $userController = new UserController();
 $adminController = new AdminController();
@@ -22,7 +23,15 @@ $postController = new PostController();
 $commentController = new CommentController();
 $categoryController = new CategoryController();
 
+$filesManager = new FilesManager();
 
+
+function debug( $var )
+{
+    echo "<pre>";
+    var_dump( $var );
+    echo "<pre>";
+}
 
 
 // Models
@@ -37,10 +46,13 @@ $categoryController = new CategoryController();
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
         case 'home' :
-            $homeController->getHome();
+            $pageController->getHome();
+            break;
+        case 'downloadcv' :
+            $filesManager->downloadFile('./assets/uploads/cv.pdf');
             break;
         case 'skills' : 
-            $pageController->handleSkills();
+            $pageController->getSkills();
             break;
         case 'portfolio' : 
             $pageController->handlePortfolio();

@@ -4,6 +4,7 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700;1,900&family=Poppins:wght@300;500;600;700&display=swap");
 :root,
 [data-bs-theme=light] {
   --bs-blue: #0d6efd;
@@ -11914,6 +11915,24 @@ ul {
   padding: 0px;
 }
 
+.heading {
+  font-family: "Playfair Display";
+  font-weight: bold;
+  line-height: 1.1em;
+}
+.heading--small {
+  font-size: 1em;
+}
+.heading--medium {
+  font-size: 1.5em;
+}
+.heading--large {
+  font-size: 2em;
+}
+.heading--extra-large {
+  font-size: 2.5em;
+}
+
 .homepage {
   padding-top: 80px;
 }
@@ -12013,19 +12032,22 @@ ul {
 
 .button {
   border-radius: 0;
+  padding: 1rem;
 }
 .button--primary {
-  border: 1px solid #000;
+  background-color: #042C74;
+  border: 1px solid #042C74;
+  color: #fff;
 }
 .button--primary:hover {
-  border: 1px solid #000;
-  background-color: #fff;
-  color: #000;
+  border: 1px solid #042C74;
+  background-color: #042C74;
+  color: #fff;
 }
 .button--primary:focus {
   border: 1px solid #000;
-  background-color: #fff;
-  color: #000;
+  background-color: #042C74;
+  color: #fff;
 }
 .button--secondary {
   border: 1px solid #000;
@@ -12078,11 +12100,20 @@ ul {
 .hero {
   margin-top: 5rem;
 }
+.hero__content__profile {
+  width: 200px;
+}
+.hero__content__link {
+  margin-top: 3rem;
+  display: inline;
+}
 .hero .name {
   color: #042C74;
 }
-.hero .profile-image {
-  margin-bottom: 1rem;
+.hero__buttons {
+  margin-top: 2rem;
+  list-style: none;
+  gap: 2rem;
 }
 .hero__image img, .hero__image video {
   max-width: 100%;
@@ -12105,14 +12136,45 @@ ul {
   color: #000;
 }
 
-footer {
+.footer {
   margin-top: 10rem;
   padding: 2rem 0rem;
   background-color: #042C74;
   padding-top: 2rem;
 }
-footer .logo {
-  width: 10rem;
+.footer .logo {
+  width: 10em;
+  opacity: 0.2;
+}
+.footer__menu {
+  list-style-type: none;
+  gap: 1rem;
+}
+.footer__menu__link {
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.9;
+}
+.footer__menu__link:hover {
+  border-bottom: 0.2rem solid #fff;
+}
+.footer__copyright {
+  color: #fff;
+  opacity: 0.2;
+}
+.footer__socialmedia {
+  list-style: none;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+.footer__socialmedia__link {
+  color: #fff;
+  opacity: 0.9;
+}
+
+hr {
+  border-color: white !important;
+  opacity: 0.1;
 }
 
 /*# sourceMappingURL=style.css.map */
