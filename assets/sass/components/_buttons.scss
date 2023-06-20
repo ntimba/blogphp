@@ -1,0 +1,38 @@
+.button{
+    border-radius: 0;
+    padding: 1rem;
+
+    &--primary{
+        background-color: #042C74;
+        border: 1px solid #042C74;
+        color: #fff;
+        &:hover{
+            border: 1px solid #042C74;
+            background-color: #042C74;
+            color: #fff;
+        }
+        &:focus{
+            border: 1px solid #000;
+            background-color: #042C74;
+            color: #fff;
+        }
+    }
+
+    &--secondary{
+        border: 1px solid #000;
+        background-color: #000;
+        color: #fff;
+        &:hover{
+            border: 1px solid #000;
+            background-color: #000;
+            color: #fff; 
+        }
+        &:focus{
+            border: 1px solid #000;
+            background-color: #000;
+            color: #fff;
+        }
+        
+    }
+
+}

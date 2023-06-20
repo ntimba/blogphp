@@ -1,0 +1,49 @@
+.footer{
+    margin-top: 10rem;
+    padding: 2rem 0rem;
+    background-color: #042C74;
+    // background-color: #000;
+    padding-top: 2rem;
+    .logo{
+        width: 10em;
+        opacity: 0.2;
+    }
+    
+    // les pages 
+    &__menu{
+        list-style-type: none;
+        gap: 1rem;
+        &__link{
+            text-decoration: none;
+            color: #fff;
+            opacity: 0.9;
+
+            &:hover{
+                border-bottom: 0.2rem solid #fff;
+            }
+        }
+    }
+
+    &__copyright{
+        color: #fff;
+        opacity: 0.2;
+    }
+
+    &__socialmedia{
+        list-style: none;
+        gap: 1rem;
+        font-size: 1.5rem;
+
+        &__link{
+            color: #fff;
+            opacity: 0.9;
+        }
+    }
+    
+}
+
+
+hr{
+    border-color: white !important;
+    opacity: 0.1;
+}

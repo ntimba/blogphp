@@ -1,0 +1,67 @@
+.navbar{
+    background-color: #fff;
+    .downloadcv{
+        font-size: 0.9rem;
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+        &::after{
+            // content: "\F355";
+            font-family: "bootstrap-icons";
+            padding-left: 0.4rem;
+            vertical-align: middle;
+        }
+    }
+}
+
+
+.offcanvas{
+    &__header{
+        ul{
+            margin: 1rem 0rem;
+            list-style: none;
+            padding: 0;
+
+            gap: 2rem;
+
+            a{
+                &.login::after{
+                    content: "\F1BE";
+                    font-family: "bootstrap-icons";
+                    padding-left: 0.5rem;
+                    vertical-align: middle;
+                }
+
+                &.signup::after{
+                    content: "\F89A";
+                    font-family: "bootstrap-icons";
+                    padding-left: 0.5rem;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+
+    &__body{
+        ul{
+            li{
+                margin: 0.5rem 0rem;
+                a{
+                    display: inline;
+                    color:#000;
+                    padding: 0.5rem 0.5rem;
+                    &:hover{
+                        background-color: #000;
+                        color: #fff;
+                    }
+
+                    &.active{
+                        color: #fff !important;
+                        background-color: #000;
+                    }
+                }
+            }
+        }
+    }
+}

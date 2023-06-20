@@ -15,16 +15,14 @@
 </head>
 <body>
     <div class="center">
-
         <h1>Commentaires</h1>
-        
         <table>
             <tr>
                 <th>Auteur</th>
                 <th>Titre Article</th>
                 <th>Commentaire</th>
                 <th>date</th>
-                <th>Vérifié</th>                
+                <th>Vérifié</th>            
             </tr>
             <?php foreach($comments as $comment): ?>
             <tr>

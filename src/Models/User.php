@@ -18,8 +18,9 @@ class User
     private ?string $token;
     private ?string $profilePicture;
     private ?string $biography;
-    private mixed $statut;
-    private mixed $auditedAccount;
+    private bool $statut;
+    private bool $auditedAccount;
+
     private array $errors = [];
 
     protected const INVALID_ID = "Le format de l'identifiant est invalid";
@@ -37,8 +38,6 @@ class User
     protected const DO_NOT_EXCEED_1 = "Le paramètre ne doit pas dépasser 1.";
     protected const BOOLEAN_OR_INTEGER = "Le paramètre doit être un booléen ou un entier.";
     
-
-
     public function __construct( array $userdata = [])
     {
         $this->hydrate($userdata);
@@ -47,7 +46,8 @@ class User
     // hydrater
     public function hydrate(array $data) : void
     {
-        foreach ($data as $attribut => $value) {
+        foreach ($data as $attribut => $value) 
+        {
             $setters = 'set'. ucfirst($attribut);
             $this->$setters($value);
         }
@@ -78,7 +78,6 @@ class User
         } 
     }
 
-
     public function setLastname(string $lastName) : void
     {
         if( is_string( $lastName ) && !empty($lastName) )
@@ -89,7 +88,6 @@ class User
         } 
     }
     
-
     public function setEmail(string $email) : void
     {
         if( is_string( $email ) && !empty($email) )
@@ -159,12 +157,12 @@ class User
     {
         $this->biography = $biography;
     
-        if (!is_string($biography) || (is_string($biography) && empty($biography))) {
+        if (!is_string($biography) && !is_null($biography)) {
             $this->errors[] = self::INVALID_BIOGRAPHY;
         }
     }
 
-    public function setStatut(mixed $statut): void
+    public function setStatut(bool $statut): void
     {
         if (is_bool($statut) || is_int($statut)) {
             if ($statut <= 1) {
@@ -177,8 +175,7 @@ class User
         }
     }
     
-    
-    public function setAuditedAccount(mixed $audited): void
+    public function setAuditedAccount(bool $audited): void
     {
         if (is_bool($audited)) {
             $this->auditedAccount = $audited;
@@ -239,19 +236,19 @@ class User
         return $this->profilePicture;
     }
 
-    public function getBiography() : string
+    public function getBiography() : ?string
     {
         return $this->biography;
     }
 
-    public function getStatut() : bool
+    public function getStatut() : int
     {
-        return $this->statut;
+        return isset( $this->statut ) ? (int) $this->statut : 0;
     }
 
-    public function getAuditedaccount() : bool
+    public function getAuditedaccount() : int
     {
-        return $this->auditedAccount;
+        return isset( $this->auditedAccount ) ? (int) $this->auditedAccount : 0;
     }
 
     public function isEmailValid(string $email) : bool

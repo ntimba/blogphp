@@ -90,22 +90,31 @@ class CommentManager
     }
 
 
-    public function getComments( int $comment_id ): mixed
+    public function getPostComments( int $postId ): mixed
     {
-        $query = 'SELECT  comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify FROM comment WHERE comment_id = :comment_id';
+        $query = 'SELECT  comment_id, comment_content, comment_date, comment_id_post, comment_user_id , comment_verify FROM comment WHERE comment_id_post = :comment_id_post';
         $statement = $this->db->getConnection()->prepare($query);
         $statement->execute([
-            'comment_id' => $comment_id
+            'comment_id_post' => $postId
         ]);
 
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $commentData = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        if ( $result === false ) {
+        if ( $commentData === false ) {
             return false;
         }
-        
-        $comments = new Comment();
-        $comments->hydrate( $result );
+
+        foreach( $commentData as $commentData ) {
+            $comment = new Comment();
+            $comment->setId($commentData['comment_id']);
+            $comment->setContent($commentData['comment_content']);
+            $comment->setCommentedDate($commentData['comment_date']);
+            $comment->setPostId($commentData['comment_id_post']);
+            $comment->setUserId($commentData['comment_user_id']);
+            $comment->setCommentVerify($commentData['comment_verify']);
+
+            $comments[] = $comment;
+        }
         return $comments;
     }
     

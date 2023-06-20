@@ -82,42 +82,21 @@
 
         <div class="hero">
             <div class="row">
-                <div class="col-md-6 hero__image d-none d-sm-block d-sm-none d-md-block">
-                    <img src="/assets/img/aboutme_img.png" alt="background image">
-                </div>
                 <div class="col-md-6 mb-5 hero__content">
                     <div class="row">
-                        <h1 class="heading--small">Développeur PHP polyvalent avec une gamme de compétences variées</h1>
-                        <!-- <h3 class="title--sub">Developpeur d'application php</h3> -->
-                        <p>Spécialiste en développement web PHP, je conçois des solutions fonctionnelles et esthétiques. Fort de mon expertise et ma volonté d'apprendre, je fournis des résultats de qualité en respectant les
-normes de securite et les besoins specitiques de chaque projet.</p>
+                        <h1 class="title--hero">Salut,<br> Je suis <span class="name"><?= $userData->getFirstname() ?></span></h1>
+                        <h3 class="title--sub">Developpeur d'application php</h3>
+                        <p><?= $userData->getBiography(); ?></p>
                     </div>
-
                     <div class="row">
-                        <div class="skills">
-
-                        PHP
-                        <div class="progress mb-3" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: 60%"></div>
-                        </div>
-
-                        SQL
-                        <div class="progress mb-3" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: 40%"></div>
-                        </div>
-
-                        Symfony
-                        <div class="progress mb-3" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: 20%"></div>
-                        </div>
-                        
-                        JavaScript
-                        <div class="progress mb-3" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar" style="width: 35%"></div>
-                        </div>
-                            
-                        </div>
+                        <ul class="hero__buttons d-flex justify-content-start">
+                            <li><a class="btn button button--primary hero__content__link" href="?action=contact">Contacter Moi <i class="bi bi-person-rolodex"></i></a></li>
+                            <li><a class="btn button button--secondary hero__content__link" href="?action=downloadcv">Télécharger mon cv <i class="bi bi-download"></i></a></li> 
+                        </ul>
                     </div>
+                </div>
+                <div class="col-md-6 hero__image d-none d-sm-block d-sm-none d-md-block">
+                    <img src="/assets/img/aboutme_img.png" alt="background image">
                 </div>
             </div>
         </div>

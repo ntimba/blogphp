@@ -3,15 +3,18 @@ session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
-
 // User controller
 use Ntimbablog\Portfolio\Controllers\UserController;
 use Ntimbablog\Portfolio\Controllers\AdminController;
 use Ntimbablog\Portfolio\Controllers\PostController;
 use Ntimbablog\Portfolio\Controllers\commentController;
 use Ntimbablog\Portfolio\Controllers\CategoryController;
+use Ntimbablog\Portfolio\Controllers\PageController;
+use Ntimbablog\Portfolio\Models\FilesManager;
 
 
+// $homeController = new HomeController();
+$pageController = new PageController();
 
 $userController = new UserController();
 $adminController = new AdminController();
@@ -20,9 +23,13 @@ $postController = new PostController();
 $commentController = new CommentController();
 $categoryController = new CategoryController();
 
+$filesManager = new FilesManager();
+
+
+
+
 
 // Models
-
 
 // la fonction de debugage
 
@@ -33,11 +40,18 @@ $categoryController = new CategoryController();
 
 if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     switch( $_GET['action'] ) {
-        case 'about' :
-            $pageController->handleAbout();
+        case 'home' :
+            $pageController->getHome();
+            break;
+        case 'downloadcv' :
+            try{
+                $filesManager->downloadFile('./assets/uploads/cv.pdf');
+            } catch (Exception $e){
+                echo "Erreur : " . $e->getMessage();
+            }
             break;
         case 'skills' : 
-            $pageController->handleSkills();
+            $pageController->getSkills();
             break;
         case 'portfolio' : 
             $pageController->handlePortfolio();
@@ -73,11 +87,16 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             break;
     }
 }else{
-    $pageController->handleAbout();
+    // $pageController->handleAbout();
+    $pageController->getHome();
 }
 
 
-// Créer une fonction qui va recevoir comme paramètres un tableau, 
+// Créer une fonction qui va recevoir comme paramètres un tableau.
+// les éléments de ce tableau doivent avoir un nom cohérent par exemple : 
+// si le nom de l'action est login, on va appeler la méthode $controller->login();
+// Une fonction va traiter les actions
+// Une autre fonction va traiter les posts
 
 
 /**
@@ -89,10 +108,35 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
         case 'admin' :
             $adminController->dashboard();
             break;
+
+        case 'activateuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->activate($identifier);
+                // header('Location: index.php?action=users');
+            }
+            break;
+
+        case 'restrictuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->restrict($identifier);
+            }
+            break;
+        case 'deleteuser' :
+            if( isset($_GET['id']) && $_GET['id'] > 0 ){
+                $identifier = (int) $_GET['id'];
+                $userController->delete($identifier);
+            }
+            break;
+        case 'users' :
+            $userController->getAllUsers();
+            break;
+
         case 'adminblogposts' : 
             $postController->displayAdminBlogPosts();
             break;
-        case 'adminpostcomments' : 
+        case 'comments' : 
             $commentController->displayAdminPostComments();
             break;
 
@@ -154,7 +198,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $identifier = 0;
             if( isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = (int) $_GET['id'];        
-                
+
                 $postController->toupdate($identifier);
 
             }else{
@@ -175,8 +219,26 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $postController->updatePost($data);
             break;
 
-        case 'users' : 
-            $adminController->handleUsers();
+        case 'profile' : 
+            if( isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 ){
+                $identifier = (int) $_SESSION['user_id'];
+                // passer le paramètre dans la méthode 
+                $userController->manageProfile($identifier);
+            }
+            break;
+            
+        case 'updateprofile' : 
+            if( isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 ){
+                $identifier = (int) $_SESSION['user_id'];
+                // passer le paramètre dans la méthode 
+                $data = [];
+                if( isset( $_POST ) && !empty( $_POST ) || isset( $_FILES['profile_image'] ) ) {
+                    $data = $_POST;
+                    $data['profile_image'] = $_FILES['profile_image'];  
+                    $userController->updateProfile($data);
+                    $userController->manageProfile($identifier);
+                }
+            }
             break;
         case 'user' : 
             $adminController->handleUser();
@@ -185,7 +247,9 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $adminController->logout();
             break;
         default: 
-            echo "page d'accueil";
+            // echo "page d'accueil";
+            // $homeController->getHome();
+
         break;
     }
 }else{
