@@ -26,12 +26,7 @@ $categoryController = new CategoryController();
 $filesManager = new FilesManager();
 
 
-function debug( $var )
-{
-    echo "<pre>";
-    var_dump( $var );
-    echo "<pre>";
-}
+
 
 
 // Models
@@ -49,7 +44,11 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
             $pageController->getHome();
             break;
         case 'downloadcv' :
-            $filesManager->downloadFile('./assets/uploads/cv.pdf');
+            try{
+                $filesManager->downloadFile('./assets/uploads/cv.pdf');
+            } catch (Exception $e){
+                echo "Erreur : " . $e->getMessage();
+            }
             break;
         case 'skills' : 
             $pageController->getSkills();
@@ -89,8 +88,7 @@ if( isset( $_GET['action'] ) && $_GET['action'] !== '') {
     }
 }else{
     // $pageController->handleAbout();
-    $homeController->getHome();
-
+    $pageController->getHome();
 }
 
 

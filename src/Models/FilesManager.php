@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Ntimbablog\Portfolio\Models;
 
+use JetBrains\PhpStorm\ExpectedValues;
+use \Exception;
+
 class FilesManager
 {
     public function importFile(array $file, string $destination) : string|NULL
@@ -92,7 +95,7 @@ class FilesManager
         return false;
     }
 
-    public function downloadFile($filePath) {
+    public function downloadFile(string $filePath) {
         if (file_exists($filePath)) {
             // Définition des en-têtes HTTP
             header('Content-Description: File Transfer');
@@ -105,8 +108,9 @@ class FilesManager
             // Lecture du fichier et envoi vers le navigateur
             readfile($filePath);
             exit;
+
         } else {
-            echo "Le fichier n'existe pas.";
+            throw new Exception("Le fichier n'existe pas.");
         }
     }
     
